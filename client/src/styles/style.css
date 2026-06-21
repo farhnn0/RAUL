@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+/* ============================================================
+   🌐 GLOBAL STYLES — Digunakan di semua halaman
+   ============================================================ */
+
+/* ----- Font Family dan Gaya Umum ----- */
+.dm-sans {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.archivo {
+    font-family: "Archivo Black", sans-serif;
+}
+
+/* ----- Tombol Umum ----- */
+.btn {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    border: 2px solid #000;
+    font-size: 1.1rem;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.btn-info {
+    background-color: #dcc5b2 !important;
+    border: none !important;
+    color: #3a2a1a !important;
+    font-weight: 600;
+    padding: 10px 30px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-info:hover {
+    background-color: #d9a299 !important;
+    color: #2a1f11 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-info:active,
+.btn-info:focus {
+    background-color: #c9958b !important;
+    color: #2a1f11 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
+}
+
+/* ----- Tombol Kembali ----- */
+.back-button {
+    background-color: #f0e4d3;
+    border: none;
+    color: #3e2f1c;
+    font-weight: 600;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #dcc5b2;
+    color: #2a1f11;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.back-button:active,
+.back-button:focus {
+    background-color: #d9a299 !important;
+    color: #2a1f11 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) inset !important;
+    outline: none !important;
+    border: none !important;
+}
+
+/* ============================================================
+   🆕 SIGNUP PAGE
+   ============================================================ */
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg,
+        #FAF7F3 0%,
+        #F5ECE0 40%,
+        #E6D4BB 75%,
+        #D9A299 100%);
+    padding: 50px;
+}
+
+/* Kartu utama */
+.card {
+    background: #F8F1E9;
+    border-radius: 75px;
+    border: 1px solid #000000;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    width: 80%;
+    max-width: 1200px;
+}
+
+/* Struktur kiri-kanan signup */
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+/* Kiri */
+.left-side h2 {
+    font-family: "Archivo Black", sans-serif;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1px;
+}
+
+.left-side img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Kanan */
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.right-side h2 {
+    font-family: "Archivo Black", sans-serif;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Form elemen */
+.form-control {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    border: 2px solid #000;
+    font-size: 1.1rem;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+/* Konsistensi antara Signin dan Signup */
+.right-side .form-floating {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.right-side .btn {
+    max-width: 400px;
+}
+
+/* ============================================================
+   ✳️ SIGNIN PAGE
+   ============================================================ */
+
+/* Kamu bisa pakai class yang sama dengan signup tapi ubah warna / padding di Signin */
+.signin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg,
+        #F8F1E9 0%,
+        #F0E4D3 40%,
+        #E3D0B6 75%,
+        #D9A299 100%);
+    padding: 40px;
+}
+
+/* ============================================================
+   🔒 FORGOT PASSWORD PAGE
+   ============================================================ */
+
+.forgot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #FAF7F3;
+    padding: 40px;
+}
+
+.forgot-card {
+    background: #FFF8F3;
+    border-radius: 40px;
+    border: 1px solid #d9a299;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+    max-width: 500px;
+    width: 90%;
+}
+
+.forgot-card h2 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.8rem;
+    color: #3a2a1a;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ============================================================
+   📜 PRIVACY POLICY PAGE
+   ============================================================ */
+
+.privacy-container {
+    background-color: #FAF7F3;
+    padding: 80px 60px;
+    font-family: "DM Sans", sans-serif;
+    color: #2a1f11;
+    line-height: 1.8;
+}
+
+.privacy-container h1, .privacy-container h2 {
+    font-family: "Archivo Black", sans-serif;
+    color: #d9a299;
+}
+
+.privacy-container h1 {
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.privacy-container h2 {
+    margin-top: 30px;
+    font-size: 1.6rem;
+}
+
+.privacy-container p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* ============================================================
+   📱 RESPONSIVE DESIGN
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .btn, .form-control {
+        width: 100%;
+    }
+
+    .archivo {
+        font-size: 1.8rem;
+    }
+
+    .privacy-container {
+        padding: 40px 20px;
+    }
+}

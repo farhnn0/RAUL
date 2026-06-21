@@ -1,0 +1,106 @@
+/* ===============================
+    MOVIE CARD - REUSABLE COMPONENT
+   =============================== */
+
+.movie-card {
+    background-color: #F0E4D3;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card-img {
+    height: 350px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-card-img {
+    transform: scale(1.05);
+}
+
+.movie-card-body {
+    padding: 20px;
+    background-color: #F0E4D3;
+    flex: 1;
+}
+
+.movie-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2A1F11;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.4em;
+    line-height: 1.2em;
+}
+
+.movie-rating {
+    color: #2A1F11;
+    font-size: 0.95rem;
+}
+
+.movie-detail-btn {
+    background: linear-gradient(135deg, #D9A299 0%, #C48880 100%);
+    border: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(217, 162, 153, 0.3);
+    color: white;
+}
+
+.movie-detail-btn:hover {
+    background: linear-gradient(135deg, #C48880 0%, #B37870 100%);
+    box-shadow: 0 6px 18px rgba(217, 162, 153, 0.5);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.movie-detail-btn:active {
+    transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .movie-card-img {
+        height: 300px;
+    }
+
+    .movie-card-title {
+        font-size: 1rem;
+    }
+
+    .movie-card-body {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .movie-card-img {
+        height: 250px;
+    }
+
+    .movie-card-title {
+        font-size: 0.95rem;
+    }
+
+    .movie-rating {
+        font-size: 0.9rem;
+    }
+}

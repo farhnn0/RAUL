@@ -1,0 +1,162 @@
+.profile-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #f5f5f5;
+}
+
+/* Loading state */
+.profile-page-loading {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+/* HEADER ala IMDb */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 10%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: radial-gradient(circle at top left, #333 0, #111 50%, #111 100%);
+}
+
+.profile-header-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.profile-avatar-large {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    box-shadow: 0 10px 30px rgba(255, 193, 7, 0.4);
+}
+
+.profile-header-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-username {
+    font-size: 2.4rem;
+    margin: 0;
+}
+
+.profile-meta-line {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.profile-header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* STATS SECTION */
+.profile-stats-section {
+    padding: 20px 10%;
+    display: flex;
+    gap: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-stat-card {
+    flex: 0 0 180px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-stat-card.clickable {
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.profile-stat-card.clickable:hover {
+    transform: translateY(-2px);
+    border-color: #ffc107;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.profile-stat-card.disabled {
+    opacity: 0.5;
+}
+
+.profile-stat-icon {
+    font-size: 1.2rem;
+    color: #ffc107;
+}
+
+.profile-stat-label {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.profile-stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* CONTENT SECTION (edit profil) */
+.profile-content-section {
+    padding: 32px 10% 48px;
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-header-right {
+        margin-top: 16px;
+    }
+
+    .profile-stats-section {
+        flex-wrap: wrap;
+    }
+
+    .profile-stat-card {
+        flex: 1 1 45%;
+    }
+}
+
+/* Adult Content Switch Styling */
+.adult-content-switch .form-check-input {
+    width: 3rem;
+    height: 1.5rem;
+    cursor: pointer;
+    background-color: #6c757d;
+    border: none;
+}
+
+.adult-content-switch .form-check-input:checked {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.adult-content-switch .form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+.text-muted{
+    color: #ddd !important;
+}

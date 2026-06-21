@@ -1,0 +1,53 @@
+.admin-dashboard {
+    background-color: #141414; 
+    min-height: 100vh;
+    color: white;
+}
+
+.stats-card {
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    border-color: #e50914;
+}
+
+.stats-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #e50914;
+}
+
+.custom-table {
+    background-color: #1f1f1f;
+    color: white;
+}
+
+.custom-table th {
+    background-color: #333;
+    color: #e50914;
+    border-color: #444;
+}
+
+.custom-table td {
+    border-color: #333;
+    vertical-align: middle;
+}
+
+/* Tab Navigation */
+.admin-tabs .nav-link {
+    color: #aaa;
+    cursor: pointer;
+}
+
+.admin-tabs .nav-link.active {
+    color: white;
+    background-color: #e50914 !important;
+    font-weight: bold;
+}

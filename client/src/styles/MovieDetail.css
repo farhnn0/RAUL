@@ -1,0 +1,140 @@
+/* Komponen StarRating di Modal */
+.star-label {
+    cursor: pointer;
+}
+
+.star-input {
+    display: none;
+}
+
+/* Wrapper & Overlay Halaman Utama */
+.movie-detail-wrapper {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: #fff;
+    position: relative;
+}
+
+.movie-detail-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+}
+
+.movie-detail-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* State Loading / Not Found */
+.movie-detail-state-container {
+    min-height: 100vh;
+    background-color: #1a1a1a;
+}
+
+/* Poster Film */
+.movie-poster-img {
+    width: 100%;
+    max-width: 300px;
+    border: 2px solid #444;
+}
+
+/* Info Teks */
+.movie-overview {
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.genre-badge {
+    font-size: 0.9rem;
+}
+
+.tmdb-rating-text {
+    font-size: 0.9rem;
+}
+
+/* Bagian Review */
+.review-card {
+    background-color: #1b1b1b;
+    border: 1px solid #2a2a2a;
+}
+
+/* Modal Review Textarea */
+.review-textarea {
+    width: 90%;
+    max-width: 500px;
+    resize: none;
+    text-align: center;
+}
+
+.movie-meta-line span {
+    margin-right: 1rem;
+}
+
+@media (max-width: 576px) {
+    .movie-meta-line {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .movie-meta-line span {
+        margin-right: 0;
+        margin-bottom: 4px;
+    }
+}
+
+.actor-link {
+    cursor: pointer;
+    color: #f5f5f5;
+}
+
+.actor-link:hover {
+    color: #ffc107;
+    text-decoration: underline;
+}
+
+.review-menu {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 20;
+}
+
+/* icon titik 3 */
+.review-menu-toggle {
+    cursor: pointer;
+    color: #aaa;
+    padding: 4px;
+}
+
+/* hover effect halus */
+.review-menu-toggle:hover {
+    color: #ffc107;
+}
+
+/* HAPUS caret segitiga bootstrap */
+.review-menu-toggle::after {
+    display: none !important;
+}
+
+/* HAPUS background / border bawaan */
+.review-menu .dropdown-toggle {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* rapihin menu */
+.review-menu .dropdown-menu {
+    min-width: 140px;
+}
+
+.review-stars {
+    position: relative;
+    top: -3px; /* ubah jadi -2px / -4px sesuai selera */
+}
+
+
