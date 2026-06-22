@@ -1,4 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+    --background: #0F1115;
+    --surface: #171B22;
+    --surface-card: #1D232C;
+    --border: #2A303A;
+    --primary: #D4A017;
+    --primary-hover: #E0AF28;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A7AFBA;
+    --text-muted: #6B7280;
+
+    --font-heading: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --radius-card: 12px;
+    --radius-button: 10px;
+}
+
+body {
+    background-color: var(--background) !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-body) !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .logo-brand, .archivo {
+    font-family: var(--font-heading) !important;
+}
 
 /* ============================================================
    🌐 GLOBAL STYLES — Digunakan di semua halaman
@@ -6,78 +35,79 @@
 
 /* ----- Font Family dan Gaya Umum ----- */
 .dm-sans {
-    font-family: "DM Sans", sans-serif;
+    font-family: var(--font-body), sans-serif;
     font-size: 1.1rem;
     text-align: center;
 }
 
 .archivo {
-    font-family: "Archivo Black", sans-serif;
+    font-family: var(--font-heading), sans-serif;
 }
 
 /* ----- Tombol Umum ----- */
 .btn {
     width: 100%;
     max-width: 400px;
-    border-radius: 15px;
-    border: 2px solid #000;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--border);
     font-size: 1.1rem;
-    padding: 15px;
+    padding: 12px;
     margin: 10px 0;
+    font-family: var(--font-body);
 }
 
 .btn-info {
-    background-color: #dcc5b2 !important;
+    background-color: var(--primary) !important;
     border: none !important;
-    color: #3a2a1a !important;
+    color: var(--background) !important;
     font-weight: 600;
     padding: 10px 30px;
-    border-radius: 12px;
+    border-radius: var(--radius-button);
     transition: all 0.3s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .btn-info:hover {
-    background-color: #d9a299 !important;
-    color: #2a1f11 !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    background-color: var(--primary-hover) !important;
+    color: var(--background) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     transform: translateY(-2px);
 }
 
 .btn-info:active,
 .btn-info:focus {
-    background-color: #c9958b !important;
-    color: #2a1f11 !important;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    background-color: var(--primary) !important;
+    color: var(--background) !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
     outline: none !important;
 }
 
 /* ----- Tombol Kembali ----- */
 .back-button {
-    background-color: #f0e4d3;
-    border: none;
-    color: #3e2f1c;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
     font-weight: 600;
     padding: 10px 30px;
-    border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-button);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
 .back-button:hover {
-    background-color: #dcc5b2;
-    color: #2a1f11;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: var(--surface);
+    color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
 }
 
 .back-button:active,
 .back-button:focus {
-    background-color: #d9a299 !important;
-    color: #2a1f11 !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) inset !important;
+    background-color: var(--surface) !important;
+    color: var(--primary) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) inset !important;
     outline: none !important;
-    border: none !important;
+    border: 1px solid var(--border) !important;
 }
 
 /* ============================================================
@@ -89,22 +119,19 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg,
-        #FAF7F3 0%,
-        #F5ECE0 40%,
-        #E6D4BB 75%,
-        #D9A299 100%);
+    background: var(--background);
     padding: 50px;
 }
 
 /* Kartu utama */
 .card {
-    background: #F8F1E9;
-    border-radius: 75px;
-    border: 1px solid #000000;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+    background: var(--surface-card);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
     width: 80%;
     max-width: 1200px;
+    color: var(--text-primary);
 }
 
 /* Struktur kiri-kanan signup */
@@ -121,17 +148,19 @@
 
 /* Kiri */
 .left-side h2 {
-    font-family: "Archivo Black", sans-serif;
+    font-family: var(--font-heading);
     text-align: center;
     font-size: 2rem;
+    color: var(--primary);
     margin-bottom: 1px;
 }
 
 .left-side img {
     max-width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: var(--radius-card);
     object-fit: cover;
+    border: 1px solid var(--border);
 }
 
 /* Kanan */
@@ -144,9 +173,10 @@
 }
 
 .right-side h2 {
-    font-family: "Archivo Black", sans-serif;
+    font-family: var(--font-heading);
     text-align: center;
     font-size: 2rem;
+    color: var(--text-primary);
     margin-bottom: 20px;
 }
 
@@ -154,11 +184,18 @@
 .form-control {
     width: 100%;
     max-width: 400px;
-    border-radius: 15px;
-    border: 2px solid #000;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--border);
+    background-color: var(--surface) !important;
+    color: var(--text-primary) !important;
     font-size: 1.1rem;
-    padding: 15px;
+    padding: 12px;
     margin: 10px 0;
+}
+
+.form-control:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(212, 160, 23, 0.25) !important;
 }
 
 /* Konsistensi antara Signin dan Signup */
@@ -176,17 +213,12 @@
    ✳️ SIGNIN PAGE
    ============================================================ */
 
-/* Kamu bisa pakai class yang sama dengan signup tapi ubah warna / padding di Signin */
 .signin-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg,
-        #F8F1E9 0%,
-        #F0E4D3 40%,
-        #E3D0B6 75%,
-        #D9A299 100%);
+    background: var(--background);
     padding: 40px;
 }
 
@@ -199,24 +231,25 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #FAF7F3;
+    background-color: var(--background);
     padding: 40px;
 }
 
 .forgot-card {
-    background: #FFF8F3;
-    border-radius: 40px;
-    border: 1px solid #d9a299;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    background: var(--surface-card);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
     padding: 50px;
     max-width: 500px;
     width: 90%;
+    color: var(--text-primary);
 }
 
 .forgot-card h2 {
-    font-family: "Archivo Black", sans-serif;
+    font-family: var(--font-heading);
     font-size: 1.8rem;
-    color: #3a2a1a;
+    color: var(--primary);
     text-align: center;
     margin-bottom: 20px;
 }
@@ -226,16 +259,16 @@
    ============================================================ */
 
 .privacy-container {
-    background-color: #FAF7F3;
+    background-color: var(--background);
     padding: 80px 60px;
-    font-family: "DM Sans", sans-serif;
-    color: #2a1f11;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
     line-height: 1.8;
 }
 
 .privacy-container h1, .privacy-container h2 {
-    font-family: "Archivo Black", sans-serif;
-    color: #d9a299;
+    font-family: var(--font-heading);
+    color: var(--primary);
 }
 
 .privacy-container h1 {

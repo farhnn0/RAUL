@@ -1,13 +1,13 @@
-/* ===============================
-    MOVIE CARD - REUSABLE COMPONENT
-   =============================== */
+/* ============================================================
+   MOVIE CARD - REUSABLE COMPONENT (Google Stitch Dark Theme)
+   ============================================================ */
 
 .movie-card {
-    background-color: #F0E4D3;
-    border: none;
-    border-radius: 16px;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     display: flex;
@@ -16,13 +16,15 @@
 
 .movie-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary);
+    box-shadow: 0 12px 30px rgba(212, 160, 23, 0.25);
 }
 
 .movie-card-img {
     height: 350px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-bottom: 1px solid var(--border);
 }
 
 .movie-card:hover .movie-card-img {
@@ -31,14 +33,17 @@
 
 .movie-card-body {
     padding: 20px;
-    background-color: #F0E4D3;
+    background-color: var(--surface-card);
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .movie-card-title {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #2A1F11;
+    color: var(--text-primary);
     margin-bottom: 8px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -47,29 +52,34 @@
     text-overflow: ellipsis;
     min-height: 2.4em;
     line-height: 1.2em;
+    font-family: var(--font-heading);
 }
 
 .movie-rating {
-    color: #2A1F11;
+    color: var(--primary);
     font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
 }
 
 .movie-detail-btn {
-    background: linear-gradient(135deg, #D9A299 0%, #C48880 100%);
+    background: var(--primary);
     border: none;
     font-weight: 600;
     padding: 10px 20px;
-    border-radius: 12px;
+    border-radius: var(--radius-button);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(217, 162, 153, 0.3);
-    color: white;
+    box-shadow: 0 4px 12px rgba(212, 160, 23, 0.2);
+    color: var(--background) !important;
+    text-align: center;
+    text-decoration: none;
 }
 
 .movie-detail-btn:hover {
-    background: linear-gradient(135deg, #C48880 0%, #B37870 100%);
-    box-shadow: 0 6px 18px rgba(217, 162, 153, 0.5);
+    background: var(--primary-hover);
+    box-shadow: 0 6px 18px rgba(212, 160, 23, 0.4);
     transform: translateY(-2px);
-    color: white;
+    color: var(--background) !important;
 }
 
 .movie-detail-btn:active {

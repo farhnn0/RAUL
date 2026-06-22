@@ -1,63 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/api';
-import { Container, Row, Col, Card, Spinner, Breadcrumb, Badge } from 'react-bootstrap';
-import { StarFill, Calendar } from 'react-bootstrap-icons';
-import '../styles/GenrePage.css'; // Menggunakan style yang sama dengan GenrePage
 
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
-// === [BARU] Komponen Helper untuk Rating (Tampilan Sama Persis) ===
 const YearMovieCard = ({ movie, onClick }) => {
-    const [rating, setRating] = useState({ avg: 0, count: 0 });
-
+    const [rating, setRating] = useState({ avg: 0 });
     useEffect(() => {
         if (!movie?.id) return;
-        const fetchRating = async () => {
-            try {
-                // Ambil rating asli dari database kamu
-                const res = await api.get(`/reviews/stats/${movie.id}`);
-                if (res.data) {
-                    setRating({ avg: res.data.average || 0, count: res.data.count || 0 });
-                }
-            } catch (err) { /* silent error */ }
-        };
-        fetchRating();
+        api.get(`/reviews/stats/${movie.id}`).then(res => setRating(res.data || {})).catch(() => {});
     }, [movie.id]);
 
     return (
-        <Card
-            className="movie-card"
-            onClick={() => onClick(movie.id)}
-        >
-            <div className="poster-wrapper">
-                <Card.Img
-                    variant="top"
-                    src={
-                        movie.poster_path
-                            ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
-                            : 'https://via.placeholder.com/300x450?text=No+Image'
-                    }
-                    alt={movie.title}
+        <div onClick={() => onClick(movie.id)} className="bg-surface-card border border-outline-variant/60 rounded-xl overflow-hidden group cursor-pointer shadow-lg hover:border-primary/30 transition-all">
+            <div className="relative aspect-[2/3] overflow-hidden">
+                <img
+                    src={movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : 'https://via.placeholder.com/300x450/1D232C/A7AFBA?text=No+Image'}
+                    alt={movie.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300" loading="lazy"
                 />
-
-                {/* Rating Badge (Sekarang Dinamis dari DB) */}
-                <div className="rating-overlay">
-                    <StarFill size={12} className="me-1" />
-                    <span>{rating.avg > 0 ? rating.avg.toFixed(1) : '0.0'}</span>
+                <div className="absolute top-3 right-3 bg-background/85 backdrop-blur-sm px-2 py-0.5 rounded text-primary text-xs font-bold flex items-center gap-1 border border-primary/30">
+                    <span className="material-symbols-outlined text-[12px] fill-icon text-primary">star</span>
+                    {rating.avg ? rating.avg.toFixed(1) : '0.0'}
                 </div>
             </div>
-
-            <Card.Body className="p-2">
-                <h6 className="movie-title text-light mb-1">
-                    {movie.title}
-                </h6>
-                <div className="movie-year text-secondary">
-                    <Calendar size={10} className="me-1" />
-                    {movie.release_date?.slice(0, 4) || 'N/A'}
-                </div>
-            </Card.Body>
-        </Card>
+            <div className="p-3">
+                <h6 className="text-sm font-heading font-semibold text-text-primary truncate group-hover:text-primary transition-colors">{movie.title}</h6>
+                <p className="text-xs text-text-muted mt-1">{movie.release_date?.slice(0, 4) || 'N/A'}</p>
+            </div>
+        </div>
     );
 };
 
@@ -71,93 +41,59 @@ export default function YearPage() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
-    useEffect(() => {
-        fetchMoviesByYear();
-    }, [year, page, isAdult]);
+    useEffect(() => { fetchMoviesByYear(); }, [year, page, isAdult]);
 
     const fetchMoviesByYear = async () => {
         setLoading(true);
         try {
-            const res = await api.get('/movies/discover', {
-                params: {
-                    year: year,
-                    page: page,
-                    isAdult: isAdult,
-                }
-            });
+            const res = await api.get('/movies/discover', { params: { year, page, isAdult } });
             setMovies(res.data.results);
             setTotalPages(res.data.total_pages > 500 ? 500 : res.data.total_pages);
-        } catch (error) {
-            console.error('Gagal fetch movies:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleCardClick = (movieId) => {
-        navigate(`/movie/${movieId}`);
-    };
-
-    const handleLoadMore = () => {
-        if (page < totalPages) {
-            setPage(page + 1);
-            setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 100);
-        }
+        } catch (error) { console.error('Error:', error); }
+        finally { setLoading(false); }
     };
 
     if (loading && page === 1) {
         return (
-            <div className="genre-loading">
-                <Spinner animation="border" variant="warning" />
-                <p className="mt-3 text-light">Memuat film tahun {year}...</p>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center pt-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary"></div>
+                <p className="mt-4 text-text-secondary">Loading films from {year}...</p>
             </div>
         );
     }
 
     return (
-        <div className="genre-page">
-            <Container className="py-4">
-                {/* Breadcrumb */}
-                <Breadcrumb className="mb-4">
-                    <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
-                        Home
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item active>Tahun: {year}</Breadcrumb.Item>
-                </Breadcrumb>
+        <div className="min-h-screen bg-background pt-20">
+            <div className="max-w-[1280px] mx-auto px-6 py-12">
+                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors mb-8 text-sm font-semibold">
+                    <span className="material-symbols-outlined text-[20px]">arrow_back</span> Back
+                </button>
 
-                {/* Header */}
-                <div className="genre-header mb-4">
-                    <h1 className="text-light fw-bold">Film {year}</h1>
-                    <Badge bg="warning" text="dark" className="fs-6">
-                        {movies.length} film ditemukan
-                    </Badge>
+                <div className="flex items-center gap-4 mb-10">
+                    <div className="w-1 h-10 bg-primary rounded-full" />
+                    <div>
+                        <h1 className="text-3xl font-heading font-bold text-text-primary">Films from {year}</h1>
+                        <p className="text-text-secondary text-sm mt-1">
+                            <span className="text-primary font-bold">{movies.length}</span> films found
+                        </p>
+                    </div>
                 </div>
 
-                {/* Movies Grid */}
-                <Row className="g-3 justify-content-start">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
                     {movies.map((movie) => (
-                        <Col xs={6} sm={4} md={3} lg={2} key={movie.id}>
-                            {/* Kita panggil komponen helper di sini */}
-                            <YearMovieCard movie={movie} onClick={handleCardClick} />
-                        </Col>
+                        <YearMovieCard key={movie.id} movie={movie} onClick={(id) => navigate(`/movie/${id}`)} />
                     ))}
-                </Row>
+                </div>
 
-                {/* Load More Button */}
                 {page < totalPages && (
-                    <div className="text-center mt-4">
-                        <button
-                            className="btn btn-warning px-5"
-                            onClick={handleLoadMore}
-                            disabled={loading}
-                        >
-                            {loading ? 'Memuat...' : 'Muat Lebih Banyak'}
+                    <div className="text-center mt-12">
+                        <button onClick={() => { setPage(page + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }} disabled={loading}
+                            className="bg-primary text-on-primary font-bold px-8 py-3 rounded-lg hover:bg-gold-hover transition-all text-sm uppercase tracking-wider disabled:opacity-50">
+                            {loading ? 'Loading...' : 'Load More'}
                         </button>
                     </div>
                 )}
-            </Container>
+            </div>
         </div>
     );
 }

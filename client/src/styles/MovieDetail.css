@@ -1,4 +1,40 @@
-/* Komponen StarRating di Modal */
+/* ============================================================
+   MOVIE DETAIL STYLE (Neon Shadows / Cinematic Editorial Theme)
+   ============================================================ */
+
+/* ── Hero Backdrop Parallax & Fade ── */
+.movie-detail-backdrop-img {
+    animation: backdropFadeIn 1.2s ease forwards;
+}
+
+@keyframes backdropFadeIn {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Poster Card Float Animation ── */
+.movie-detail-poster-wrapper {
+    animation: posterFloatUp 1s ease forwards;
+}
+
+@keyframes posterFloatUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Info text stagger ── */
+.movie-detail-info {
+    animation: infoFadeIn 0.8s ease forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+@keyframes infoFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Komponen StarRating di Modal ── */
 .star-label {
     cursor: pointer;
 }
@@ -13,61 +49,133 @@
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
-    color: #fff;
+    color: var(--text-primary);
     position: relative;
 }
 
 .movie-detail-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(8px);
+    background: rgba(15, 17, 21, 0.85); /* background token #0F1115 with opacity */
+    backdrop-filter: blur(12px);
 }
 
 .movie-detail-content {
     position: relative;
     z-index: 2;
+    padding-top: 100px !important;
 }
 
 /* State Loading / Not Found */
 .movie-detail-state-container {
     min-height: 100vh;
-    background-color: #1a1a1a;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Poster Film */
 .movie-poster-img {
     width: 100%;
     max-width: 300px;
-    border: 2px solid #444;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
 
 /* Info Teks */
 .movie-overview {
-    color: #ccc;
+    color: var(--text-secondary);
     line-height: 1.8;
 }
 
 .genre-badge {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
 }
 
 .tmdb-rating-text {
     font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-/* Bagian Review */
+/* ── Section Headers ── */
+.section-header-icon {
+    color: var(--primary);
+    font-size: 24px;
+}
+
+/* ── Cast Cards ── */
+.cast-card {
+    transition: all 0.3s ease;
+}
+
+.cast-card:hover .cast-avatar {
+    border-color: rgba(212, 160, 23, 0.5);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.cast-avatar {
+    transition: all 0.3s ease;
+}
+
+/* ── Review Cards ── */
 .review-card {
-    background-color: #1b1b1b;
-    border: 1px solid #2a2a2a;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Modal Review Textarea */
+.review-card:hover {
+    border-color: rgba(212, 160, 23, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Similar Movie Cards ── */
+.similar-movie-card {
+    transition: all 0.3s ease;
+}
+
+.similar-movie-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 160, 23, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.similar-movie-card .poster-img {
+    transition: transform 0.5s ease;
+}
+
+.similar-movie-card:hover .poster-img {
+    transform: scale(1.03);
+}
+
+/* ── Rating Badge on Similar Cards ── */
+.similar-rating-badge {
+    background: rgba(15, 17, 21, 0.9);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(212, 160, 23, 0.3);
+}
+
+/* ── Modal Review Textarea ── */
 .review-textarea {
     width: 90%;
     max-width: 500px;
     resize: none;
     text-align: center;
+    background-color: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
 }
 
 .movie-meta-line span {
@@ -88,14 +196,16 @@
 
 .actor-link {
     cursor: pointer;
-    color: #f5f5f5;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
 }
 
 .actor-link:hover {
-    color: #ffc107;
+    color: var(--primary);
     text-decoration: underline;
 }
 
+/* ── Review Edit/Delete Menu ── */
 .review-menu {
     position: absolute;
     top: 8px;
@@ -103,38 +213,69 @@
     z-index: 20;
 }
 
-/* icon titik 3 */
 .review-menu-toggle {
     cursor: pointer;
-    color: #aaa;
+    color: var(--text-muted);
     padding: 4px;
 }
 
-/* hover effect halus */
 .review-menu-toggle:hover {
-    color: #ffc107;
+    color: var(--primary);
 }
 
-/* HAPUS caret segitiga bootstrap */
 .review-menu-toggle::after {
     display: none !important;
 }
 
-/* HAPUS background / border bawaan */
 .review-menu .dropdown-toggle {
     background: none !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-/* rapihin menu */
 .review-menu .dropdown-menu {
     min-width: 140px;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-color);
 }
 
 .review-stars {
     position: relative;
-    top: -3px; /* ubah jadi -2px / -4px sesuai selera */
+    top: -3px;
 }
 
+/* ── Back Button ── */
+.detail-back-btn {
+    background: var(--surface-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-button);
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
 
+.detail-back-btn:hover {
+    background: var(--surface);
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: translateX(-5px);
+    box-shadow: 0 6px 18px rgba(212, 160, 23, 0.2);
+}
+
+/* ── Responsive Adjustments ── */
+@media (max-width: 768px) {
+    .movie-detail-hero {
+        min-height: 500px;
+    }
+
+    .movie-detail-poster-wrapper {
+        width: 160px;
+    }
+}

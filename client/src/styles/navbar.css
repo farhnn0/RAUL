@@ -1,22 +1,24 @@
-/* ===============================
-    NAVBAR STYLES
-   =============================== */
+/* ============================================================
+   NAVBAR STYLES (Google Stitch Cinematic Editorial Theme)
+   ============================================================ */
 
 .navbar-fixed {
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 70px;
-    background-color: #f5e6d3;
+    height: 80px;
+    background-color: var(--background) !important;
+    border-bottom: 1px solid var(--border) !important;
+    box-shadow: none !important;
+    transition: all 0.3s ease;
 }
 
 .navbar-fixed .container-fluid {
-    max-width: 1400px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 /* Logo Container */
@@ -25,19 +27,22 @@
     align-items: center;
     gap: 12px;
     margin-right: 30px;
+    text-decoration: none;
 }
 
 .logo-icon {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
 }
 
 .logo-brand {
-    font-family: "Archivo Black", sans-serif;
-    color: #3a2a1a;
-    font-size: 1.5rem;
+    font-family: var(--font-heading), sans-serif;
+    color: var(--primary) !important;
+    font-size: 1.8rem;
+    font-weight: 800;
     margin: 0;
+    letter-spacing: -0.03em;
     white-space: nowrap;
 }
 
@@ -49,13 +54,13 @@
 
 /* Dropdown Kategori Button */
 .kategori-btn {
-    background-color: white;
-    color: #3a2a1a;
-    border: 1px solid #dcc5b2;
-    border-radius: 8px;
+    background-color: var(--surface-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
     padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -65,7 +70,9 @@
 }
 
 .kategori-btn:hover {
-    background-color: #f9f3eb;
+    background-color: var(--surface);
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 .dropdown-icon {
@@ -83,11 +90,11 @@
     top: 100%;
     left: 0;
     margin-top: 8px;
-    background-color: white;
-    border: 1px solid #dcc5b2;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 20px;
+    background-color: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    padding: 24px;
     min-width: 800px;
     max-height: 500px;
     overflow-y: auto;
@@ -112,7 +119,7 @@
 .dropdown-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
 }
 
 .dropdown-column {
@@ -123,17 +130,17 @@
 .mega-dropdown-item {
     display: block;
     padding: 8px 12px;
-    color: #3a2a1a;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.95rem;
     transition: all 0.2s ease;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .mega-dropdown-item:hover {
-    background-color: #f0dcc8;
+    background-color: var(--surface);
     padding-left: 20px;
-    color: #2a1f11;
+    color: var(--primary);
 }
 
 /* Search bar */
@@ -147,66 +154,70 @@
 }
 
 .input-wrapper {
-    background-color: white;
+    background-color: var(--surface);
     width: 360px;
-    border-radius: 15px;
-    height: 2.5rem;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--border);
+    height: 48px;
     padding: 0px 15px;
-    box-shadow: 0px 0px 8px #ddd;
+    box-shadow: none !important;
     display: flex;
     align-items: center;
 }
 
 .inputsearch {
-    background-color: transparent;
-    border: none;
-    height: 20%;
-    font-size: 1rem;
-    width: 20%;
-    margin-left: 5px;
+    background-color: transparent !important;
+    border: none !important;
+    height: 100% !important;
+    font-size: 14px !important;
+    color: var(--text-primary) !important;
+    width: 100% !important;
+    margin-left: 10px;
+    box-shadow: none !important;
 }
 
 .inputsearch:focus {
-    outline: none;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .inputsearch::placeholder {
-    color: #999;
-    font-size: 0.95rem;
+    color: var(--text-muted);
 }
 
 /* Filter Konten Dewasa */
 .adult-toggle-wrapper {
-margin-left: 160px;
+    margin-left: 16px;
 }
 
 .adult-toggle-btn {
-border-radius: 50px;
-height: 52px;
-width: 78px;
-font-weight: 700;
-border: 2px solid #c9b5a3;
-color: #2a1f11;
-background: #fff7f3;
-transition: all 0.25s ease;
-font-size: 1rem;
-letter-spacing: 0.5px;
+    border-radius: var(--radius-button);
+    height: 44px;
+    width: 64px;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    background: var(--surface-card);
+    transition: all 0.25s ease;
+    font-size: 14px;
+    letter-spacing: 0.5px;
 }
 
 .adult-toggle-btn:hover {
-background: #ead7c8;
-border-color: #b79f8e;
+    background: var(--surface);
+    border-color: var(--primary);
 }
 
 .adult-toggle-btn.active {
-background: #b44343;
-color: white;
-border-color: #923737;
+    background: #b44343;
+    color: white;
+    border-color: #923737;
 }
 
 .adult-toggle-btn.active:hover {
-background: #923737;
+    background: #923737;
 }
+
 /* Navbar Content Wrapper */
 .navbar-content-wrapper {
     display: flex;
@@ -235,6 +246,7 @@ background: #923737;
     margin-left: auto;
     flex-shrink: 0;
 }
+
 .auth-buttons-container {
     display: flex;
     align-items: center;
@@ -243,66 +255,70 @@ background: #923737;
 }
 
 .login-btn {
-    font-family: "DM Sans", sans-serif;
-    padding: 10px 28px;
-    font-size: 1rem;
-    border-radius: 20px;
-    font-weight: bold;
+    font-family: var(--font-body), sans-serif;
+    padding: 10px 24px;
+    font-size: 14px;
+    border-radius: var(--radius-button);
+    font-weight: 600;
     transition: all 0.3s ease;
     white-space: nowrap;
 }
 
 .btn-masuk {
-    border: 2px solid #8B4513;
-    color: #8B4513;
-    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
 }
 
 .btn-masuk:hover {
-    background-color: #8B4513;
-    color: white;
+    background-color: var(--surface-card) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
 }
 
 .btn-daftar {
-    background-color: #8B4513;
-    color: white;
-    border: 2px solid #8B4513;
+    background-color: var(--primary) !important;
+    color: var(--background) !important;
+    border: 1px solid var(--primary) !important;
 }
 
 .btn-daftar:hover {
-    background-color: #6d3410;
-    border-color: #6d3410;
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    color: var(--background) !important;
 }
 
 /* Profile dropdown */
 .profile-dropdown-menu {
     min-width: 200px;
-    border: 1px solid #dcc5b2;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: #f5e6d3;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background-color: var(--surface-card) !important;
 }
 
 .profile-dropdown-menu .dropdown-item {
-    font-family: "DM Sans", sans-serif;
-    color: #3a2a1a;
-    padding: 8px 16px;
+    font-family: var(--font-body), sans-serif;
+    color: var(--text-secondary) !important;
+    padding: 10px 20px;
 }
 
 .profile-dropdown-menu .dropdown-item:hover {
-    background-color: #d9a299;
-    color: #2a1f11;
+    background-color: var(--surface) !important;
+    color: var(--primary) !important;
 }
 
 /* User Dropdown Button */
 .user-dropdown-btn {
-    background-color: #8B4513 !important;
-    color: white !important;
-    border: none !important;
-    padding: 8px 20px !important;
+    background-color: var(--surface-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+    padding: 10px 20px !important;
 }
 
 .user-dropdown-btn:hover {
-    background-color: #6d3410 !important;
+    background-color: var(--surface) !important;
+    color: var(--primary) !important;
+    border-color: var(--primary) !important;
 }
 
 /* Responsif navbar */
@@ -370,12 +386,12 @@ background: #923737;
 
 @media (max-width: 768px) {
     .logo-brand { 
-        font-size: 1.2rem; 
+        font-size: 1.4rem; 
     }
     
     .logo-icon { 
-        width: 40px; 
-        height: 40px; 
+        width: 32px; 
+        height: 32px; 
     }
     
     .navbar-fixed .container-fluid {

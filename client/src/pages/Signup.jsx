@@ -1,189 +1,118 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
-import Image from 'react-bootstrap/Image';
-import logo from '../assets/logo/logoWeb.png';
-import img from '../assets/logo/log1.png';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../api/api'; 
-import '../styles/style.css';
+import api from '../api/api';
+import logoWeb from '../assets/logo/logoWeb.png';
 
 export default function Signup() {
-    const {
-        handleSubmit,
-        register,
-        formState: { errors, isSubmitting },
-        watch // <-- TAMBAHAN: untuk validasi konfirmasi password
-    } = useForm();
-    
-    // Amati nilai password
+    const { handleSubmit, register, formState: { errors, isSubmitting }, watch } = useForm();
     const password = watch("password");
-
     const navigate = useNavigate();
     const location = useLocation();
 
-    const doSubmit = async values => {
+    const doSubmit = async (values) => {
         try {
             const res = await api.post('/auth/signup', values);
-
-            // Sesuaikan dengan respons backend baru (201 Created)
             if (res.status === 201) {
-                // Tampilkan pesan sukses dari server (cth: "Cek email Anda...")
-                toast.success(res.data.message, {
-                    duration: 4000, // Beri waktu lebih agar user bisa baca
-                });
-                
-                // Arahkan ke halaman login
-                setTimeout(() => {
-                    navigate('/signin', { 
-                        state: { from: location.state?.from } 
-                    });
-                }, 2000);
+                toast.success(res.data.message, { duration: 4000 });
+                setTimeout(() => navigate('/signin', { state: { from: location.state?.from } }), 2000);
             } else {
-                // Jaga-jaga jika ada status sukses lain
-                toast.error(res.data.message || 'Pendaftaran gagal.');
+                toast.error(res.data.message || 'Signup failed.');
             }
         } catch (error) {
-            // Tangkap error dari backend (cth: email sudah ada)
-            toast.error(error.response?.data?.message || 'Terjadi kesalahan');
+            toast.error(error.response?.data?.message || 'An error occurred');
         }
     };
 
     return (
-        <Container
-            fluid
-            className="d-flex justify-content-center align-items-center signup-container"
-        >
-            <Card className="p-5 w-75 card">
-                <Row>
-                    {/* Left Side */}
-                    <Col md={6} className="text-center left-side">
-                        <div className="d-flex justify-content-center align-items-center mb-3 mt-3">
-                            <Image src={logo} roundedCircle className="logo me-2 mb-2" />
-                            <h2 className="mb-1 archivo title-logo title-form align-title">RAUL</h2>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <Image src={img} rounded className="log1" />
-                        </div>
-                    </Col>
+        <div className="min-h-screen bg-background flex items-center justify-center p-8">
+            <div className="bg-surface-card border border-outline-variant/60 rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col md:flex-row">
+                {/* Left Side - Brand */}
+                <div className="md:w-1/2 bg-surface p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-outline-variant/40">
+                    <img src={logoWeb} alt="RAUL" className="w-16 h-16 mb-4" />
+                    <h2 className="text-3xl font-heading font-bold text-primary mb-3 tracking-tighter">RAUL</h2>
+                    <p className="text-text-secondary text-sm max-w-xs">
+                        Join the community of cinema critics and enthusiasts.
+                    </p>
+                </div>
 
-                    {/* Right Side */}
-                    <Col md={6} className="right-side">
-                        <Form onSubmit={handleSubmit(doSubmit)} className="text-center">
-                            <h2 className="mb-4 archivo title-form align-title">Daftar Akun RAUL</h2>
-
-                            {/* Email Field */}
-                            <FloatingLabel controlId="floatingInputEmail" label="Email" className="mb-3">
-                                <Form.Control
-                                    type="email"
-                                    placeholder="name@example.com"
-                                    {...register('email', { 
-                                        required: 'Masukkan email',
-                                        pattern: { // Validasi format email
-                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                            message: "Email tidak valid"
-                                        }
-                                    })}
-                                />
-                                {errors.email && (
-                                    <Form.Text className="text-danger">{errors.email.message}</Form.Text>
-                                )}
-                            </FloatingLabel>
-
-                            {/* Username Field */}
-                            <FloatingLabel controlId="floatingInputUsername" label="Nama Lengkap" className="mb-3">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Alexandro Dronolo"
-                                    {...register('username', { required: 'Masukkan Nama Lengkap' })}
-                                />
-                                {errors.username && (
-                                    <Form.Text className="text-danger">{errors.username.message}</Form.Text>
-                                )}
-                            </FloatingLabel>
-
-                            {/* Password Field */}
-                            <FloatingLabel controlId="floatingPassword" label="Kata Sandi">
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Password"
-                                    className="mb-3"
-                                    {...register('password', { 
-                                        required: 'Masukkan Kata Sandi',
-                                        minLength: { value: 6, message: "Password minimal 6 karakter" }
-                                    })}
-                                />
-                                {errors.password && (
-                                    <Form.Text className="text-danger">{errors.password.message}</Form.Text>
-                                )}
-                            </FloatingLabel>
-
-                            {/* Confirm Password Field */}
-                            <FloatingLabel controlId="floatingConfirmPassword" label="Ulangi Kata Sandi">
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Password"
-                                    className="mb-3"
-                                    {...register('confirmPassword', { 
-                                        required: 'Masukkan konfirmasi kata sandi',
-                                        validate: value => // Validasi pencocokan
-                                            value === password || "Kata sandi tidak cocok"
-                                    })}
-                                />
-                                {errors.confirmPassword && (
-                                    <Form.Text className="text-danger">
-                                        {errors.confirmPassword.message}
-                                    </Form.Text>
-                                )}
-                            </FloatingLabel>
-
-                            <Form.Check
-                                type="checkbox"
-                                id="agreementCheckbox"
-                                label={
-                                    <span className="dm-sans">
-                                        Saya menyetujui{' '}
-                                        <a href="privacy-policy" className="link-dark">
-                                            <b>kebijakan privasi</b>
-                                        </a>{' '}
-                                        RAUL
-                                    </span>
-                                }
-                                className="mb-3"
-                                {...register('agreement', { required: 'Anda harus menyetujui kebijakan privasi' })}
+                {/* Right Side - Form */}
+                <div className="md:w-1/2 p-10 flex flex-col justify-center">
+                    <h2 className="text-2xl font-heading font-bold text-text-primary mb-8 text-center">Create Account</h2>
+                    <form onSubmit={handleSubmit(doSubmit)} className="flex flex-col gap-4">
+                        <div>
+                            <label className="block text-sm font-semibold text-text-primary mb-1.5">Email</label>
+                            <input
+                                type="email"
+                                placeholder="name@example.com"
+                                {...register('email', {
+                                    required: 'Email is required',
+                                    pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid email" }
+                                })}
+                                className="w-full bg-surface border border-outline-variant/60 rounded-lg px-4 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors text-sm"
                             />
-                            {errors.agreement && (
-                                <Form.Text className="text-danger">{errors.agreement.message}</Form.Text>
-                            )}
+                            {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+                        </div>
 
-                            <Button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="btn btn-info mt-2 wide-button dm-sans mb-3"
-                            >
-                                {isSubmitting ? 'Loading...' : <strong>Daftar</strong>}
-                            </Button>
-                            <p className="mt-3 mb-5 dm-sans">
-                                Sudah Punya Akun?{' '}
-                                <span 
-                                    onClick={() => navigate('/signin', { state: { from: location.state?.from } })}
-                                    className="link-dark"
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    <b>Masuk</b>
-                                </span>
-                            </p>
-                        </Form>
-                    </Col>
-                </Row>
-            </Card>
-        </Container>
+                        <div>
+                            <label className="block text-sm font-semibold text-text-primary mb-1.5">Full Name</label>
+                            <input
+                                type="text"
+                                placeholder="Your Name"
+                                {...register('username', { required: 'Full name is required' })}
+                                className="w-full bg-surface border border-outline-variant/60 rounded-lg px-4 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors text-sm"
+                            />
+                            {errors.username && <p className="text-red-400 text-xs mt-1">{errors.username.message}</p>}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-semibold text-text-primary mb-1.5">Password</label>
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                {...register('password', { required: 'Password is required', minLength: { value: 6, message: "Password must be at least 6 characters" } })}
+                                className="w-full bg-surface border border-outline-variant/60 rounded-lg px-4 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors text-sm"
+                            />
+                            {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password.message}</p>}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-semibold text-text-primary mb-1.5">Confirm Password</label>
+                            <input
+                                type="password"
+                                placeholder="Confirm Password"
+                                {...register('confirmPassword', {
+                                    required: 'Please confirm your password',
+                                    validate: value => value === password || "Passwords do not match"
+                                })}
+                                className="w-full bg-surface border border-outline-variant/60 rounded-lg px-4 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors text-sm"
+                            />
+                            {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword.message}</p>}
+                        </div>
+
+                        <div className="flex items-center gap-2 mt-2">
+                            <input type="checkbox" id="agreement" {...register('agreement', { required: 'You must agree to the privacy policy' })} className="accent-primary" />
+                            <label htmlFor="agreement" className="text-text-secondary text-sm">
+                                I agree to the{' '}
+                                <a href="/privacy-policy" className="text-primary hover:text-gold-hover font-semibold">Privacy Policy</a>
+                            </label>
+                        </div>
+                        {errors.agreement && <p className="text-red-400 text-xs">{errors.agreement.message}</p>}
+
+                        <button type="submit" disabled={isSubmitting} className="w-full bg-primary text-on-primary font-bold py-3 rounded-lg hover:bg-gold-hover transition-all text-sm uppercase tracking-wider disabled:opacity-50 mt-2">
+                            {isSubmitting ? 'Loading...' : 'Create Account'}
+                        </button>
+
+                        <p className="text-center text-text-secondary text-sm mt-4">
+                            Already have an account?{' '}
+                            <span onClick={() => navigate('/signin', { state: { from: location.state?.from } })} className="text-primary hover:text-gold-hover font-semibold cursor-pointer transition-colors">
+                                Sign In
+                            </span>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     );
 }

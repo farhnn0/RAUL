@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Julian Thorne | RAUL Film Journal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Sora:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111317;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2A303A;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4A017;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#a2a8b5",
+                        "on-error": "#690005",
+                        "on-primary-container": "#503a00",
+                        "secondary": "#c3c6d0",
+                        "text-secondary": "#A7AFBA",
+                        "text-primary": "#FFFFFF",
+                        "on-tertiary": "#2b313b",
+                        "surface-tint": "#f6be39",
+                        "background": "#111317",
+                        "primary-container": "#d4a017",
+                        "surface-bright": "#37393e",
+                        "tertiary": "#c1c7d4",
+                        "on-secondary-fixed": "#181c23",
+                        "secondary-fixed-dim": "#c3c6d0",
+                        "outline-variant": "#4f4634",
+                        "on-primary": "#402d00",
+                        "gold-hover": "#E0AF28",
+                        "surface-variant": "#333539",
+                        "on-primary-fixed-variant": "#5c4300",
+                        "surface-container-low": "#1a1c20",
+                        "on-background": "#e2e2e8",
+                        "secondary-container": "#43474f",
+                        "on-secondary-fixed-variant": "#43474f",
+                        "surface": "#111317",
+                        "primary-fixed": "#ffdfa0",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-tertiary-fixed": "#161c25",
+                        "text-muted": "#6B7280",
+                        "outline": "#9b8f7a",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#373d48",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#261a00",
+                        "primary": "#f6be39",
+                        "surface-card": "#1D232C",
+                        "surface-container-highest": "#333539",
+                        "primary-fixed-dim": "#f6be39",
+                        "inverse-surface": "#e2e2e8",
+                        "inverse-on-surface": "#2f3035",
+                        "tertiary-fixed": "#dde2f0",
+                        "surface-container": "#1e2024",
+                        "on-secondary": "#2d3138",
+                        "surface-dim": "#111317",
+                        "on-secondary-container": "#b2b5be",
+                        "on-surface-variant": "#d3c5ae",
+                        "on-tertiary-fixed-variant": "#414752",
+                        "inverse-primary": "#795900",
+                        "tertiary-fixed-dim": "#c1c7d4",
+                        "secondary-fixed": "#dfe2ec",
+                        "on-surface": "#e2e2e8",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#282a2e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "margin-page": "24px",
+                        "container-max": "1280px",
+                        "section-gap": "96px",
+                        "grid-gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Sora"],
+                        "headline-xl": ["Sora"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Sora"],
+                        "headline-md": ["Sora"],
+                        "headline-lg": ["Sora"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-xl": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background border-b border-outline-variant h-20">
+<div class="max-w-[1280px] mx-auto px-margin-page flex items-center justify-between h-full">
+<div class="flex items-center gap-12">
+<a class="font-headline-md text-headline-md font-bold text-primary tracking-tighter" href="#">RAUL</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-lg text-label-lg text-on-surface-variant font-medium hover:text-gold-hover transition-colors duration-200" href="#">Trending</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant font-medium hover:text-gold-hover transition-colors duration-200" href="#">Latest</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant font-medium hover:text-gold-hover transition-colors duration-200" href="#">Top Rated</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant font-medium hover:text-gold-hover transition-colors duration-200" href="#">Genres</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container rounded-full px-4 py-2 border border-outline-variant">
+<span class="material-symbols-outlined text-text-muted">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface placeholder:text-text-muted" placeholder="Search films..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-label-lg text-label-lg text-primary scale-95 active:scale-90 transition-transform">Sign In</button>
+<button class="bg-primary-container text-on-primary-container font-label-lg text-label-lg px-6 py-2 rounded-full font-bold scale-95 active:scale-90 transition-transform hover:bg-gold-hover">Join Now</button>
+</div>
+</div>
+</div>
+</nav>
+<main class="mt-20">
+<!-- Hero Section -->
+<section class="relative py-section-gap overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-10">
+
+</div>
+<div class="max-w-[1280px] mx-auto px-margin-page relative z-10">
+<div class="flex flex-col md:flex-row gap-12 items-start md:items-center">
+<div class="w-48 h-48 md:w-64 md:h-64 rounded-xl border-2 border-primary-container p-1 shrink-0 overflow-hidden group">
+<img class="w-full h-full object-cover rounded-lg group-hover:scale-110 transition-transform duration-700" data-alt="A moody, high-contrast portrait of a sophisticated film critic in a dark, editorial style. The lighting is dramatic, inspired by film noir cinematography, highlighting sharp facial features against a deep, shadowed background. The color palette is restricted to deep blacks and subtle metallic gold highlights, reflecting a cinematic and premium brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASbvNTvQ2xnqeOwFCi0RVB936dgA4hSELec-_uBNepMKhGP86khsWWIOZkIEts7rhfmjOVEpqVFK5eDxTUUfcT5dDqFBJHkDZGgL8-aLQ_MIjOM11XESBXoTBX0sAeAfrRky2hT3WmwdMv3-zVm6Mu38vAcm5DtLda2SYg-tZn8ecXxI3Qr6CM2s5eWyMO399swrBm2WylPRgc8rCbvczyL1123vI_B7CbPL61BpidEUKZDDQZ89T6l8fm6jqy-b-6Sy2Yg7bFGyGg"/>
+</div>
+<div class="flex-1">
+<div class="flex flex-wrap items-center gap-4 mb-2">
+<h1 class="font-headline-lg text-headline-lg text-text-primary">Julian Thorne</h1>
+<span class="bg-primary-container/20 text-primary px-3 py-1 rounded text-xs font-bold uppercase tracking-widest border border-primary/30">Pro Critic</span>
+</div>
+<p class="font-label-md text-label-md text-primary mb-6">Joined March 2024</p>
+<p class="font-body-lg text-body-lg text-text-secondary max-w-2xl mb-10 leading-relaxed italic">
+                            "A purveyor of visual storytelling, obsessing over the interplay of shadow and light. Dedicated to the preservation of 35mm aesthetics in a digital age."
+                        </p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-outline-variant pt-10">
+<div>
+<span class="block font-headline-md text-headline-md text-primary">1,428</span>
+<span class="font-label-md text-label-md text-text-muted uppercase tracking-wider">Movies Rated</span>
+</div>
+<div>
+<span class="block font-headline-md text-headline-md text-primary">342</span>
+<span class="font-label-md text-label-md text-text-muted uppercase tracking-wider">Watchlist</span>
+</div>
+<div>
+<span class="block font-headline-md text-headline-md text-primary">89</span>
+<span class="font-label-md text-label-md text-text-muted uppercase tracking-wider">Reviews Written</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Bento Grid -->
+<section class="max-w-[1280px] mx-auto px-margin-page pb-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-grid-gutter">
+<!-- Left Column: Activity & Genres -->
+<div class="lg:col-span-8 flex flex-col gap-grid-gutter">
+<!-- Recent Activity -->
+<div class="bg-surface-card rounded-xl p-8 border border-outline-variant">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline-sm text-headline-sm text-text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">history</span>
+                                Recent Activity
+                            </h2>
+<button class="text-primary font-label-md text-label-md hover:underline">View All Log</button>
+</div>
+<div class="space-y-6">
+<!-- Activity Item 1 -->
+<div class="flex items-center gap-6 group">
+<div class="w-16 h-24 rounded overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A moody, high-contrast poster for a classic neo-noir film. Dark city streets, rain-slicked asphalt, and sharp shadows. The aesthetic is strictly cinematic and editorial, using only deep blacks and a subtle metallic gold highlight for the title. The composition is minimalist and bold, fitting a premium film journal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQxt8olhzETlO2I40VLk_ft87u6_eaG9mc3Uip1rkNsP3DPVXwvhZpdEGmrN2Dv_s0Kl-tU-XWsPuZ50BBxnkhvcLd69EQgkHdVmIrtI0030ZkRuJf84L50o7un_s0t3SFsDoQSusRZE1fjg8m-mrSyzJZj26CZflSHOtQFBaKIKoIo5qzpcSx-xRzOS5EjXVRW2be47kZVI8Uie3gFnk_QdlVfg9djkzaih8fS1uJ6c9cdHIvYR5MP6vWq9g6IbOSIawEAO2_RG-I"/>
+</div>
+<div class="flex-1 border-b border-outline-variant pb-6 group-last:border-none">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-[20px] text-text-primary mb-1">Nightfall Paradox</h3>
+<p class="text-text-muted text-sm italic">Rated 2 hours ago</p>
+</div>
+<div class="flex items-center gap-1 bg-primary/10 px-3 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-primary scale-75" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary font-bold text-lg leading-none">9.2</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex items-center gap-6 group">
+<div class="w-16 h-24 rounded overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Minimalist movie poster showing a lone lighthouse beam cutting through thick fog. High contrast black and white photography with a subtle golden tint in the light beam. Cinematic, dramatic atmosphere, premium editorial layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyzfWhcrMe5jzAfZhh8dFrzfMO4qzAoGCjeHeiwoYlmbVIc3lctaQCwxseO_MbqqN58YNxocwW1v-Opf8rn775DfwY1YEwjCcpI8L42MgockNX-CJEdwhSNIcoCJh9rg71ZM5qktEnmgXMF3zYTQXY0JKI2Su1wdV5MVN1trAJf-DuE7gG5nc7D8ImGesBc9JqZ38DfxDH3Vz1zu1SXiKHnYcmG2CccZdKtRPTEQJwgVzaROPaZ6Kx7hxKTKoJvzI7XUM0EHLHZC2M"/>
+</div>
+<div class="flex-1 border-b border-outline-variant pb-6 group-last:border-none">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-[20px] text-text-primary mb-1">The Gilded Beacon</h3>
+<p class="text-text-muted text-sm italic">Rated Yesterday</p>
+</div>
+<div class="flex items-center gap-1 bg-primary/10 px-3 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-primary scale-75" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary font-bold text-lg leading-none">8.5</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex items-center gap-6 group">
+<div class="w-16 h-24 rounded overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster depicting a classic 1970s heist scene. Sharp geometric shapes, deep shadows, and an intense focal point on a golden vault. The visual style is modern, cinematic, and sophisticated, avoiding neon or clutter." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARv2wI-5wVsuymAL7-yAGLYo4d9E_7D8gLPbA-HuJTsGIEHPC8MbZ4XlxPM60QfrB8xJt5tQf_CKuE-jFr8AwoV2AsThyZrG3aSGaomDV6iJziKCLEXtaMAFYwpnGD9Ls2ZbNrMSUOhv1ULd2Gpd1Gjo-0GQqRkl_0Dg_hrFgBJZzQjNlzoBxyS2HDnDYScg70e00QPWW9OWt5jlndO_HwaFYIQoLGreB0fktnAqR_O-YqvTxTo5owOG0TzNrZFEZlnwxUaLOGjY_0"/>
+</div>
+<div class="flex-1 border-b border-outline-variant pb-6 group-last:border-none">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-[20px] text-text-primary mb-1">Quiet Heist</h3>
+<p class="text-text-muted text-sm italic">Rated 3 days ago</p>
+</div>
+<div class="flex items-center gap-1 bg-primary/10 px-3 py-1 rounded border border-primary/20">
+<span class="material-symbols-outlined text-primary scale-75" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-primary font-bold text-lg leading-none">7.8</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Favorite Genres -->
+<div class="bg-surface-card rounded-xl p-8 border border-outline-variant">
+<h2 class="font-headline-sm text-headline-sm text-text-primary mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">category</span>
+                            Genre Affinity
+                        </h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-6 rounded-lg bg-background border border-outline-variant hover:border-primary transition-colors flex flex-col items-center text-center">
+<span class="text-primary font-bold text-2xl mb-1">42%</span>
+<span class="font-label-md text-label-md text-text-muted uppercase">Film Noir</span>
+<div class="w-full bg-outline-variant h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 42%"></div>
+</div>
+</div>
+<div class="p-6 rounded-lg bg-background border border-outline-variant hover:border-primary transition-colors flex flex-col items-center text-center">
+<span class="text-primary font-bold text-2xl mb-1">28%</span>
+<span class="font-label-md text-label-md text-text-muted uppercase">Neo-Western</span>
+<div class="w-full bg-outline-variant h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 28%"></div>
+</div>
+</div>
+<div class="p-6 rounded-lg bg-background border border-outline-variant hover:border-primary transition-colors flex flex-col items-center text-center">
+<span class="text-primary font-bold text-2xl mb-1">15%</span>
+<span class="font-label-md text-label-md text-text-muted uppercase">Cyberpunk</span>
+<div class="w-full bg-outline-variant h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 15%"></div>
+</div>
+</div>
+<div class="p-6 rounded-lg bg-background border border-outline-variant hover:border-primary transition-colors flex flex-col items-center text-center">
+<span class="text-primary font-bold text-2xl mb-1">15%</span>
+<span class="font-label-md text-label-md text-text-muted uppercase">Documentary</span>
+<div class="w-full bg-outline-variant h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex flex-wrap gap-2">
+<span class="px-4 py-1 rounded-full bg-surface-container border border-outline-variant text-text-secondary text-sm">Psychological Thriller</span>
+<span class="px-4 py-1 rounded-full bg-surface-container border border-outline-variant text-text-secondary text-sm">Post-Horror</span>
+<span class="px-4 py-1 rounded-full bg-surface-container border border-outline-variant text-text-secondary text-sm">New Wave</span>
+<span class="px-4 py-1 rounded-full bg-surface-container border border-outline-variant text-text-secondary text-sm">French Cinema</span>
+<span class="px-4 py-1 rounded-full bg-surface-container border border-outline-variant text-text-secondary text-sm">Silent Era</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Quick Stats/Friends -->
+<div class="lg:col-span-4 flex flex-col gap-grid-gutter">
+<div class="bg-primary-container p-8 rounded-xl text-on-primary-container relative overflow-hidden group">
+<div class="relative z-10">
+<h3 class="font-headline-sm text-headline-sm mb-4 leading-tight">Curator Insights</h3>
+<p class="font-body-md text-body-md mb-6 opacity-90">Julian's ratings are 12% more critical than the global average.</p>
+<button class="w-full bg-on-primary-container text-primary-container py-3 rounded-lg font-bold text-label-lg hover:bg-black hover:text-white transition-all uppercase tracking-widest">Compare Taste</button>
+</div>
+<div class="absolute top-0 right-0 opacity-20 transform translate-x-1/4 -translate-y-1/4 group-hover:scale-110 transition-transform duration-1000">
+<span class="material-symbols-outlined text-[120px]">equalizer</span>
+</div>
+</div>
+<div class="bg-surface-card rounded-xl p-8 border border-outline-variant flex-1">
+<h2 class="font-headline-sm text-headline-sm text-text-primary mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">groups</span>
+                            Followers
+                        </h2>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center font-bold text-primary">EL</div>
+<div class="flex-1">
+<p class="text-text-primary font-bold text-sm">Elias Vance</p>
+<p class="text-text-muted text-xs">Auteur Enthusiast</p>
+</div>
+<button class="text-primary material-symbols-outlined">person_add</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center font-bold text-primary">MR</div>
+<div class="flex-1">
+<p class="text-text-primary font-bold text-sm">Mia Rossi</p>
+<p class="text-text-muted text-xs">Cinematography Nerd</p>
+</div>
+<button class="text-primary material-symbols-outlined">person_add</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center font-bold text-primary">SC</div>
+<div class="flex-1">
+<p class="text-text-primary font-bold text-sm">S. Chen</p>
+<p class="text-text-muted text-xs">Script Supervisor</p>
+</div>
+<button class="text-primary material-symbols-outlined">person_add</button>
+</div>
+</div>
+<button class="w-full mt-8 border border-outline-variant py-2 rounded-lg text-text-muted hover:text-primary hover:border-primary transition-all text-sm font-bold">Show More</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Top Rated Carousel Section -->
+<section class="bg-surface-container-lowest py-section-gap">
+<div class="max-w-[1280px] mx-auto px-margin-page">
+<div class="flex items-center justify-between mb-12">
+<h2 class="font-headline-md text-headline-md text-text-primary">Top Rated by Julian</h2>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center text-text-muted hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center text-text-muted hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex gap-grid-gutter overflow-x-auto hide-scrollbar snap-x pb-4">
+<!-- Movie Card 1 -->
+<div class="min-w-[200px] flex-none snap-start group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-4 border border-outline-variant transition-all duration-300 group-hover:-translate-y-1">
+<img class="w-full h-full object-cover" data-alt="A striking film poster featuring a solitary figure against a stark, monolithic architecture. The lighting is harsh and dramatic, creating long, geometric shadows. The aesthetic is purely cinematic and editorial, with a palette of deep charcoal and glowing amber accents. Professional, high-end film journal design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj4OMbYEIL842Ale2bEJX34JTrwsYAEO_nkK7pHCBlCo3xilc40ZLxvW1cYBJcpIITrV4HlIDDbxDzjyISFQiSgtwqHlOgS7bOyJZ7yJffz6Q74kLd-l1PchLxnaGBBN36u6Htv_c9c2XUt-OJ_OQVQwqn6iuTTPRtALMPn4_J1Wt5tQTqMCV3GZm7-R01CIVuhtbMiOEjR3pId-jALtUW4t1RpMCVZs-abBaJV4qj_A4sfAKvvfiAECCTn1wv-JH57teecBUM_kVr"/>
+</div>
+<div class="flex items-center justify-between mb-1 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">10/10</span>
+<span class="text-text-muted text-xs font-medium">2023</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-text-primary px-1 group-hover:text-primary transition-colors">The Architect</h3>
+</div>
+<!-- Movie Card 2 -->
+<div class="min-w-[200px] flex-none snap-start group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-4 border border-outline-variant transition-all duration-300 group-hover:-translate-y-1">
+<img class="w-full h-full object-cover" data-alt="A cinematic film poster showing a close-up of a human eye reflecting a complex network of digital data and circuits. High contrast lighting with a deep, moody background. Golden highlights glint off the iris. Premium editorial style for a modern film review platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc6xiYSrT6nQ7lxJJt8_N4lSl1ZLjKWqV3YJxXaQedyS9gUgBsRv7g34bcEGjdF_6Bv3yoF8UKLs3AP68AmN7G0Uo2ZBTh9D7qr5BTk19mpznyz6h5Cq2RJwpBfxk7Dx64SbULY7TvuS1IqIEAGyEqvLzWZWH1TCIPzPdGlO5zV-gNNZjWezgUrH5s85NG1nxVo46qLAoJys4QRilg4Fx_JbI1EtDXbfiAlUMGDmSVSqaM1WJhoMtc_YYH-xtTN_DDDOGDUhFCz7MT"/>
+</div>
+<div class="flex items-center justify-between mb-1 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">9.8/10</span>
+<span class="text-text-muted text-xs font-medium">2022</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-text-primary px-1 group-hover:text-primary transition-colors">Data Stream</h3>
+</div>
+<!-- Movie Card 3 -->
+<div class="min-w-[200px] flex-none snap-start group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-4 border border-outline-variant transition-all duration-300 group-hover:-translate-y-1">
+<img class="w-full h-full object-cover" data-alt="Atmospheric movie poster of a silhouette in a raining forest at night. A single lantern provides a warm, golden glow amidst cold, deep blue and black tones. Cinematic composition, sharp details, editorial quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz0jn7lybdJ9m7yC4Pfrr48_trtSGy-oxn6ft8fKa16skYpmvTPemD9psnPpzsQxKPAH_iXncmFEpuYKSL6lsNGkX6E8sNpQZVsY1znoEcYQffT10NiYOQw36bwyqOhf9649t1_ItCLeUB53y9ks_fSpLacch8pDXJGVlsnfayViilMuntSVGwQ-KjLk0ymWSymwWfGkAh8YOTmMbMnoGSyYrq6MWbwStcnp2AuA0hC17GFZxGIWzGYDdE1uSVetSsIvgHHG2ZUfqI"/>
+</div>
+<div class="flex items-center justify-between mb-1 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">9.5/10</span>
+<span class="text-text-muted text-xs font-medium">2024</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-text-primary px-1 group-hover:text-primary transition-colors">Verdant Hollow</h3>
+</div>
+<!-- Movie Card 4 -->
+<div class="min-w-[200px] flex-none snap-start group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-4 border border-outline-variant transition-all duration-300 group-hover:-translate-y-1">
+<img class="w-full h-full object-cover" data-alt="Sophisticated film poster depicting a high-speed train cutting through a snowy mountain pass at dusk. The colors are muted grays and deep blues, with a sliver of golden light from the train windows. Minimalist and powerful, following a premium cinematic design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEQInWSXokwhY2AhhoNo45S-Jbe_9gArgCaw5gWNf7HZAOW_TvSbk04B5X12GeHHDoo89fpE43vQOZnNCco8pYO2CSEG-ejv289utGKVMEMh-sp12AbqLxczfrXirTEn-yo92y4S2OslrT2CTmaCVT6h5e3kLH81YzkTFboMOF7_4Ttm0nV-OpRWao3vyEIpqyTmgNAo9TuCUw4fxWGpusq3MoFyt-WcrRC-0Ei5NVcALF4bSC89tzHcYUgv2913a07yMSZ-MXBiwa"/>
+</div>
+<div class="flex items-center justify-between mb-1 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">9.4/10</span>
+<span class="text-text-muted text-xs font-medium">2023</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-text-primary px-1 group-hover:text-primary transition-colors">Iron Meridian</h3>
+</div>
+<!-- Movie Card 5 -->
+<div class="min-w-[200px] flex-none snap-start group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-4 border border-outline-variant transition-all duration-300 group-hover:-translate-y-1">
+<img class="w-full h-full object-cover" data-alt="Moody movie poster featuring an abstract arrangement of vintage film reels casting intricate shadows against a textured wall. High-contrast lighting in a dark-mode palette of black and deep metallic gold. Serious, authoritative, and cinematic editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjnD3rJtp5QOct1M-5Xq2d7riUOCcG75dp1wb6yt9kkeqHMozV97omRLmpPk66jo2Tff7rSq40WTiNn21OZguyol788Qt6m3Yc-5etSDWoKgb17gkVN0PeHSO1-HSP1CH-inN0Uhp8dGJW_x1SzZ_zbD9TF9Xx0KTrcDBt1xzYa5M-sLfrPzc3_Qiz4vVpzpKdV-MaDTjJwn4JAF9qhqZQGOueaLMwb0gHHvH_YUTdX6nM0PtO4AVExpfLTOFhs7ifx3vPe9m77j-t"/>
+</div>
+<div class="flex items-center justify-between mb-1 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">9.2/10</span>
+<span class="text-text-muted text-xs font-medium">2021</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-text-primary px-1 group-hover:text-primary transition-colors">Celluloid Ghost</h3>
+</div>
+<!-- Movie Card 6 -->
+<div class="min-w-[200px] flex-none snap-start group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-4 border border-outline-variant transition-all duration-300 group-hover:-translate-y-1">
+<img class="w-full h-full object-cover" data-alt="Dramatic film poster of a classic opera house interior, viewed from the stage looking out. The audience is in shadow, while the balconies are illuminated by a soft, amber light. Deep blacks and rich golds dominate. A high-end, editorial film review style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQFrJaqiY5l7sQYhCQFtb0cyXc4ainBERSbUXMx_M6__OUJkiGNM3yDJ4X6iGWbL9DrA7dM3yggbmIBp9vdkuICXPSGQDF-yNMbLGoDp61aW-hdMBUmmmgP3QbtDwK4sqZboaze-pe9hi4bhzvNkOaFatlQagFCVRSEwUKy7wVQOdUEihQrs7Cwt_jyOX4lhjf_jro43Bd8bw_auGN2scHyWNx3XuhmWwKc-RYHG0WDsbc0-g3Nb-XX6iaxEdsUxXYgYohPeogGHEj"/>
+</div>
+<div class="flex items-center justify-between mb-1 px-1">
+<span class="font-label-md text-label-md text-primary font-bold">9.1/10</span>
+<span class="text-text-muted text-xs font-medium">2023</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-text-primary px-1 group-hover:text-primary transition-colors">Grand Finale</h3>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant">
+<div class="max-w-[1280px] mx-auto px-margin-page py-16 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tighter">RAUL</span>
+<p class="font-label-md text-label-md text-text-muted max-w-xs text-center md:text-left">
+                    The definitive journal for cinema critics and enthusiasts worldwide.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-body-sm text-body-sm text-text-muted hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-text-muted hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-text-muted hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Contact Us</a>
+<a class="font-body-sm text-body-sm text-text-muted hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Press Kit</a>
+<a class="font-body-sm text-body-sm text-text-muted hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Careers</a>
+</div>
+<p class="font-label-md text-label-md text-text-muted">© 2024 RAUL Film Journal. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions for horizontal scroll
+        const scrollContainer = document.querySelector('.overflow-x-auto');
+        const nextBtn = document.querySelectorAll('button')[3]; // Simple selector for demo
+        const prevBtn = document.querySelectorAll('button')[2];
+
+        if (nextBtn && scrollContainer) {
+            nextBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        }
+        if (prevBtn && scrollContainer) {
+            prevBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+        }
+
+        // Parallax effect on scroll for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('.absolute.inset-0.z-0');
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body></html>

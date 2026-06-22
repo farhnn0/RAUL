@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import logoWeb from '../../assets/logo/logoWeb.png';
-import '../../styles/Footer.css';
 
 const Footer = () => {
     const [showBackToTop, setShowBackToTop] = useState(false);
@@ -18,57 +16,55 @@ const Footer = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const footerLinks = [
+        { label: "Privacy Policy", path: "/privacy-policy" },
+        { label: "Terms of Service", path: "#" },
+        { label: "Contact Us", path: "#" },
+        { label: "Press Kit", path: "#" },
+        { label: "Careers", path: "#" },
+    ];
+
     return (
         <>
-            <footer className="modern-footer">
-                <div className="footer-container">
-                    {/* Brand Section */}
-                    <div className="footer-brand-section">
-                        <div className="footer-logo-wrapper">
-                            <img src={logoWeb} alt="RAUL Logo" className="footer-logo" />
-                            <h3 className="footer-brand-name">RAUL</h3>
-                        </div>
-                        <p className="footer-tagline">
-                            Platform terbaik untuk menemukan film favorit Anda
+            <footer className="bg-surface-container-lowest border-t border-outline-variant/40">
+                <div className="max-w-[1280px] mx-auto px-6 py-16 flex flex-col md:flex-row justify-between items-center gap-8">
+                    {/* Brand */}
+                    <div className="flex flex-col items-center md:items-start gap-4">
+                        <span className="text-2xl font-heading font-bold text-primary tracking-tighter">RAUL</span>
+                        <p className="text-xs text-text-muted max-w-xs text-center md:text-left tracking-wider font-medium uppercase">
+                            The definitive journal for cinema critics and enthusiasts worldwide.
                         </p>
                     </div>
 
-                    {/* Links Section - Only Privacy Policy */}
-                    <div className="footer-links-section">
-                        <h4 className="footer-links-title">Informasi</h4>
-                        <Link to="/privacy-policy" className="footer-link">
-                            Kebijakan Privasi
-                        </Link>
+                    {/* Links */}
+                    <div className="flex flex-wrap justify-center gap-8">
+                        {footerLinks.map((link) => (
+                            <Link
+                                key={link.label}
+                                to={link.path}
+                                className="text-sm text-text-muted hover:text-primary transition-colors opacity-80 hover:opacity-100"
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
                     </div>
-                </div>
 
-                {/* Copyright */}
-                <div className="footer-bottom">
-                    <p className="footer-copyright">
-                        © 2025 <span className="brand-highlight">RAUL</span>. Made with{' '}
-                        <span className="footer-heart">❤</span> by Team RAUL
+                    {/* Copyright */}
+                    <p className="text-xs text-text-muted font-medium">
+                        &copy; {new Date().getFullYear()} RAUL Film Journal. All rights reserved.
                     </p>
                 </div>
             </footer>
 
-            {/* Back to Top Button */}
+            {/* Back to Top */}
             <button
-                className={`back-to-top-btn ${showBackToTop ? 'show' : ''}`}
+                className={`fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-gold-hover hover:scale-110 ${
+                    showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                }`}
                 onClick={scrollToTop}
                 aria-label="Back to top"
             >
-                <svg 
-                    width="22" 
-                    height="22" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="3" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                >
-                    <polyline points="18 15 12 9 6 15"></polyline>
-                </svg>
+                <span className="material-symbols-outlined text-[24px] font-bold">arrow_upward</span>
             </button>
         </>
     );

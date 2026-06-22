@@ -3,10 +3,8 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { setWatchlist, clearUser } from './redux/userSlice';
 import { Toaster } from 'react-hot-toast';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/style.css';
-import './styles/movieGrid.css';
 import api from './api/api';
+
 import Home from './pages/Home';
 import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
@@ -27,7 +25,6 @@ import YearPage from './pages/YearPage';
 import ProfilePage from './pages/ProfilePage';
 
 const AuthContext = createContext();
-
 export const useAuth = () => useContext(AuthContext);
 
 function AppContent() {
@@ -39,22 +36,25 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchProfile();
+    let cancelled = false;
+    fetchProfile(cancelled);
+    return () => { cancelled = true; };
   }, []);
 
-  const fetchProfile = async () => {
+  const fetchProfile = async (cancelled = false) => {
     try {
       const res = await api.get('/users/profile');
+      if (cancelled) return;
       setUser(res.data);
-
       const watchlistRes = await api.get('/users/watchlist/me');
+      if (cancelled) return;
       dispatch(setWatchlist(watchlistRes.data || []));
-
     } catch (error) {
+      if (cancelled) return;
       setUser(null);
       dispatch(setWatchlist([]));
     } finally {
-      setIsLoading(false);
+      if (!cancelled) setIsLoading(false);
     }
   };
 
@@ -62,7 +62,6 @@ function AppContent() {
     const res = await api.post('/auth/login', { email, password });
     if (res.status === 200) {
       setUser(res.data);
-
       const watchlistRes = await api.get('/users/watchlist/me');
       dispatch(setWatchlist(watchlistRes.data || []));
     }
@@ -80,23 +79,30 @@ function AppContent() {
     }
   };
 
-  const value = { user, setUser,login, logout, isLoading };
+  const value = { user, setUser, login, logout, isLoading };
 
   if (isLoading) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-        <div className="spinner-border text-warning" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+      <div className="flex justify-center items-center min-h-screen bg-background">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2 border-primary/20"></div>
       </div>
     );
   }
 
   return (
     <AuthContext.Provider value={value}>
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: '#1D232C',
+            color: '#FFFFFF',
+            border: '1px solid #2A303A',
+          },
+        }}
+      />
       {!hideLayoutRoutes.includes(location.pathname) && <Header />}
-      <main className={hideLayoutRoutes.includes(location.pathname) ? '' : 'main-content'}>
+      <main className={hideLayoutRoutes.includes(location.pathname) ? '' : 'min-h-screen'}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />

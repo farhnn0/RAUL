@@ -1,185 +1,105 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { 
-    Container, Spinner, Alert, Button, Card, Row, Col, Image, 
-    Modal, Form, FloatingLabel
-} from 'react-bootstrap';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import api from '../api/api';
-import logo from '../assets/logo/logoWeb.png';
-import img from '../assets/logo/log1.png';
-import '../styles/style.css';
 import toast from 'react-hot-toast';
+import logoWeb from '../assets/logo/logoWeb.png';
 
 function VerifyEmail() {
     const [searchParams] = useSearchParams();
     const [status, setStatus] = useState('verifying');
-    const [message, setMessage] = useState('Sedang memverifikasi email Anda...');
+    const [message, setMessage] = useState('Verifying your email...');
     const navigate = useNavigate();
-
     const token = searchParams.get('token');
 
-    // --- State baru untuk Modal Kirim Ulang ---
-    const [showResendModal, setShowResendModal] = useState(false);
-    const [email, setEmail] = useState(''); 
+    const [showResend, setShowResend] = useState(false);
+    const [email, setEmail] = useState('');
     const [isResending, setIsResending] = useState(false);
-    // -----------------------------------------
 
     useEffect(() => {
-        if (!token) {
-            setStatus('error');
-            setMessage('Token verifikasi tidak ditemukan. Link tidak valid.');
-            return;
-        }
-
+        if (!token) { setStatus('error'); setMessage('Verification token not found. Invalid link.'); return; }
         const verifyToken = async () => {
             try {
                 const res = await api.post('/auth/verify-email', { token });
                 setStatus('success');
-                setMessage(res.data.message || 'Email berhasil diverifikasi! Anda akan diarahkan ke halaman login.');
-                
-                setTimeout(() => {
-                    navigate('/signin');
-                }, 3000);
-
+                setMessage(res.data.message || 'Email verified! Redirecting to login...');
+                setTimeout(() => navigate('/signin'), 3000);
             } catch (error) {
                 setStatus('error');
-                setMessage(error.response?.data?.message || 'Gagal memverifikasi email. Token mungkin kedaluwarsa atau tidak valid.');
+                setMessage(error.response?.data?.message || 'Verification failed. Token may be expired or invalid.');
             }
         };
-
         verifyToken();
-        
     }, [token, navigate]);
 
-    // --- Fungsi baru untuk Modal ---
-    const handleCloseResendModal = () => {
-        setShowResendModal(false);
-        setEmail(''); // Kosongkan email saat modal ditutup
-    };
-    const handleShowResendModal = () => setShowResendModal(true);
-
-    const handleResendSubmit = async (e) => {
+    const handleResend = async (e) => {
         e.preventDefault();
-        if (!email) {
-            return toast.error("Silakan masukkan email Anda.");
-        }
+        if (!email) { toast.error("Please enter your email."); return; }
         setIsResending(true);
         try {
-            // Panggil API backend
             const res = await api.post('/auth/resend-verification', { email });
-            handleCloseResendModal();
+            setShowResend(false);
             toast.success(res.data.message);
         } catch (error) {
-            console.error("Resend verification failed:", error);
-            toast.error("Terjadi kesalahan pada server. Coba lagi nanti.");
-        } finally {
-            setIsResending(false);
-        }
-    };
-    // -----------------------------
-
-
-    // Fungsi untuk menampilkan konten berdasarkan status
-    const renderStatus = () => {
-        if (status === 'verifying') {
-            return (
-                <>
-                    <h2 className="mb-4 archivo title-form align-title">Verifikasi Akun</h2>
-                    <Spinner animation="border" variant="warning" className="mb-3" style={{ width: '3rem', height: '3rem' }} />
-                    <h5 className="text-dark">{message}</h5>
-                    <p className="text-muted">Harap tunggu sebentar...</p>
-                </>
-            );
-        }
-        if (status === 'success') {
-            return (
-                <Alert variant="success" className="w-100">
-                    <Alert.Heading>Verifikasi Berhasil!</Alert.Heading>
-                    <p>{message}</p>
-                    <hr />
-                    <Button as={Link} to="/signin" variant="success">
-                        Login Sekarang
-                    </Button>
-                </Alert>
-            );
-        }
-        if (status === 'error') {
-            return (
-                <Alert variant="danger" className="w-100">
-                    <Alert.Heading>Verifikasi Gagal!</Alert.Heading>
-                    <p>{message}</p>
-                    <hr />
-                    {/* --- PERUBAHAN DI SINI --- */}
-                    <Button variant="danger" onClick={handleShowResendModal}>
-                        Kirim Ulang Email Verifikasi
-                    </Button>
-                    {/* --- AKHIR PERUBAHAN --- */}
-                </Alert>
-            );
-        }
+            toast.error("An error occurred. Please try again later.");
+        } finally { setIsResending(false); }
     };
 
     return (
-        <Container
-            fluid
-            className="d-flex justify-content-center align-items-center signup-container"
-        >
-            <Card className="p-5 w-75 card">
-                <Row>
-                    {/* Left Side (Sama seperti Signin) */}
-                    <Col md={6} className="text-center left-side">
-                        <div className="d-flex justify-content-center align-items-center mb-3 mt-3">
-                            <Image src={logo} roundedCircle className="logo me-2 mb-2" />
-                            <h2 className="mb-1 archivo title-logo title-form align-title">RAUL</h2>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <Image src={img} rounded className="log1" />
-                        </div>
-                    </Col>
+        <div className="min-h-screen bg-background flex items-center justify-center p-8">
+            <div className="bg-surface-card border border-outline-variant/60 rounded-2xl shadow-2xl w-full max-w-lg p-10 text-center">
+                <img src={logoWeb} alt="RAUL" className="w-14 h-14 mx-auto mb-6" />
+                <h2 className="text-2xl font-heading font-bold text-primary mb-6">Email Verification</h2>
 
-                    {/* Right Side (Menampilkan Status Verifikasi) */}
-                    <Col md={6} className="right-side d-flex flex-column justify-content-center align-items-center text-center">
-                        {renderStatus()}
-                    </Col>
-                </Row>
-            </Card>
+                {status === 'verifying' && (
+                    <>
+                        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-primary mx-auto mb-4"></div>
+                        <p className="text-text-secondary">{message}</p>
+                    </>
+                )}
 
-            {/* --- MODAL BARU UNTUK KIRIM ULANG --- */}
-            <Modal show={showResendModal} onHide={handleCloseResendModal} centered data-bs-theme="dark">
-                <Form onSubmit={handleResendSubmit}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Kirim Ulang Email Verifikasi</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p className="text-muted">Masukkan email yang Anda gunakan untuk mendaftar. Kami akan mengirimkan link verifikasi baru.</p>
-                        <FloatingLabel controlId="floatingEmail" label="Email" className="mb-3">
-                            <Form.Control
-                                type="email"
-                                placeholder="name@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </FloatingLabel>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseResendModal}>
-                            Batal
-                        </Button>
-                        <Button variant="warning" type="submit" disabled={isResending}>
-                            {isResending ? (
-                                <>
-                                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                    {' '}Mengirim...
-                                </>
-                            ) : (
-                                'Kirim'
-                            )}
-                        </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-        </Container>
+                {status === 'success' && (
+                    <div className="bg-green-900/20 border border-green-500/30 rounded-xl p-6">
+                        <span className="material-symbols-outlined text-[48px] text-green-400 mb-3 block">check_circle</span>
+                        <h3 className="text-lg font-bold text-green-400 mb-2">Verified!</h3>
+                        <p className="text-text-secondary">{message}</p>
+                        <button onClick={() => navigate('/signin')} className="mt-4 bg-primary text-on-primary font-bold px-6 py-2.5 rounded-lg hover:bg-gold-hover transition-all text-sm uppercase tracking-wider">
+                            Sign In Now
+                        </button>
+                    </div>
+                )}
+
+                {status === 'error' && (
+                    <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-6">
+                        <span className="material-symbols-outlined text-[48px] text-red-400 mb-3 block">error</span>
+                        <h3 className="text-lg font-bold text-red-400 mb-2">Verification Failed</h3>
+                        <p className="text-text-secondary mb-4">{message}</p>
+                        <button onClick={() => setShowResend(true)} className="bg-primary text-on-primary font-bold px-6 py-2.5 rounded-lg hover:bg-gold-hover transition-all text-sm uppercase tracking-wider">
+                            Resend Verification Email
+                        </button>
+                    </div>
+                )}
+
+                {/* Resend Modal */}
+                {showResend && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowResend(false)} />
+                        <div className="relative bg-surface-card border border-outline-variant/60 rounded-2xl w-full max-w-sm p-8 shadow-2xl z-10">
+                            <h3 className="text-lg font-heading font-bold text-text-primary mb-4">Resend Verification</h3>
+                            <form onSubmit={handleResend} className="flex flex-col gap-4">
+                                <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required
+                                    className="w-full bg-surface border border-outline-variant/60 rounded-lg px-4 py-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary text-sm" />
+                                <div className="flex gap-3">
+                                    <button type="button" onClick={() => setShowResend(false)} className="flex-1 py-2.5 border border-outline-variant/60 rounded-lg text-text-secondary text-sm font-semibold">Cancel</button>
+                                    <button type="submit" disabled={isResending} className="flex-1 py-2.5 bg-primary text-on-primary rounded-lg font-bold text-sm hover:bg-gold-hover disabled:opacity-50">
+                                        {isResending ? 'Sending...' : 'Send'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
 

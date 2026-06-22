@@ -1,11 +1,11 @@
-/* =======================================
-   MOVIE LIST PAGE - MATCHING STYLE
-   ======================================= */
+/* ============================================================
+   MOVIE LIST PAGE - STITCH DARK CINEMATIC THEME
+   ============================================================ */
 
-/* Page Container - Same Background as MovieGrid */
+/* Page Container */
 .movie-list-page {
     min-height: 100vh;
-    background: linear-gradient(180deg, #F0E4D3 0%, #E8D4C4 50%, #DCC5B2 100%);
+    background-color: var(--background);
     position: relative;
     overflow: hidden;
     padding: 100px 0 80px;
@@ -18,7 +18,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.06;
+    opacity: 0.03;
     background-image: 
         radial-gradient(circle at 20% 50%, white 2px, transparent 2px),
         radial-gradient(circle at 80% 50%, white 2px, transparent 2px);
@@ -42,7 +42,7 @@
 .list-deco-circle {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
 }
 
 .list-deco-1 {
@@ -70,19 +70,15 @@
 }
 
 @keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-25px) rotate(12deg);
-    }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(12deg); }
 }
 
 /* Container */
 .list-container {
     position: relative;
     z-index: 2;
-    max-width: 1400px;
+    max-width: 1280px;
 }
 
 /* ========== HEADER SECTION ========== */
@@ -92,41 +88,34 @@
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Back Button */
 .list-back-btn {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(217, 162, 153, 0.3);
-    border-radius: 12px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: 600;
-    color: #2A1F11;
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .list-back-btn:hover {
-    background: #D9A299;
-    color: white;
-    border-color: #D9A299;
+    background: var(--surface);
+    color: var(--primary);
+    border-color: var(--primary);
     transform: translateX(-5px);
-    box-shadow: 0 6px 18px rgba(217, 162, 153, 0.4);
+    box-shadow: 0 6px 18px rgba(212, 160, 23, 0.2);
 }
 
 /* Title Wrapper */
@@ -134,24 +123,24 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--surface-card);
+    border: 1px solid var(--border);
     padding: 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius-card);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     margin-bottom: 20px;
 }
 
 .list-icon-wrapper {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #D9A299 0%, #C48880 100%);
+    width: 64px;
+    height: 64px;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    box-shadow: 0 4px 15px rgba(217, 162, 153, 0.4);
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -162,43 +151,44 @@
 .list-title {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #2A1F11;
+    color: var(--text-primary);
     margin: 0 0 8px 0;
     line-height: 1.2;
+    font-family: var(--font-heading);
 }
 
 .list-subtitle {
     font-size: 1.1rem;
-    color: #5A4A3A;
+    color: var(--text-secondary);
     font-weight: 500;
     margin: 0;
 }
 
 /* Info Badge */
 .list-info-badge {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    padding: 12px 24px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
     border-radius: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: inline-block;
 }
 
 .list-page-info {
-    font-size: 1rem;
-    color: #5A4A3A;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
     font-weight: 500;
 }
 
 .list-page-info strong {
-    color: #D9A299;
+    color: var(--primary);
     font-weight: 700;
 }
 
 /* ========== LOADING STATE ========== */
 .list-loading-container {
     min-height: 100vh;
-    background: linear-gradient(180deg, #F0E4D3 0%, #E8D4C4 50%, #DCC5B2 100%);
+    background-color: var(--background);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -206,12 +196,13 @@
 }
 
 .list-loading-content {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--surface-card);
+    border: 1px solid var(--border);
     padding: 50px 60px;
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius-card);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     text-align: center;
+    color: var(--text-primary);
 }
 
 .list-spinner {
@@ -222,65 +213,62 @@
 
 .list-loading-text {
     font-size: 1.2rem;
-    color: #2A1F11;
+    color: var(--text-primary);
     font-weight: 600;
     margin: 0;
 }
 
 /* ========== EMPTY STATE ========== */
 .list-empty-state {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--surface-card);
+    border: 1px solid var(--border);
     padding: 60px 40px;
-    border-radius: 20px;
+    border-radius: var(--radius-card);
     text-align: center;
     max-width: 600px;
     margin: 40px auto;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     animation: fadeInUp 0.6s ease;
+    color: var(--text-secondary);
 }
 
 .list-empty-icon {
     font-size: 5rem;
     margin-bottom: 20px;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    color: var(--text-muted);
 }
 
 .list-empty-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #2A1F11;
+    color: var(--text-primary);
     margin-bottom: 15px;
+    font-family: var(--font-heading);
 }
 
 .list-empty-text {
     font-size: 1.1rem;
-    color: #5A4A3A;
+    color: var(--text-secondary);
     margin-bottom: 30px;
     line-height: 1.6;
 }
 
 .list-empty-btn {
-    background: linear-gradient(135deg, #D9A299 0%, #C48880 100%);
-    color: white;
+    background: var(--primary);
+    color: var(--background);
     border: none;
     padding: 14px 40px;
     font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 30px;
+    border-radius: var(--radius-button);
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(217, 162, 153, 0.3);
+    box-shadow: 0 4px 16px rgba(212, 160, 23, 0.3);
 }
 
 .list-empty-btn:hover {
-    background: linear-gradient(135deg, #C48880 0%, #B37870 100%);
-    box-shadow: 0 6px 22px rgba(217, 162, 153, 0.5);
+    background: var(--primary-hover);
+    box-shadow: 0 6px 22px rgba(212, 160, 23, 0.5);
     transform: translateY(-3px);
 }
 
@@ -301,56 +289,56 @@
 }
 
 .list-nav-btn {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: white !important;
-    border: 2px solid rgba(217, 162, 153, 0.3) !important;
+    background: var(--surface-card) !important;
+    border: 1px solid var(--border) !important;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    color: #D9A299 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: var(--primary) !important;
 }
 
 .list-nav-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #D9A299 0%, #C48880 100%) !important;
-    color: white !important;
-    border-color: #D9A299 !important;
+    background: var(--surface) !important;
+    color: var(--primary-hover) !important;
+    border-color: var(--primary) !important;
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(217, 162, 153, 0.4);
+    box-shadow: 0 6px 20px rgba(212, 160, 23, 0.2);
 }
 
 .list-nav-btn:disabled {
-    opacity: 0.4;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
 .list-page-indicator {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px 35px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    padding: 12px 30px;
     border-radius: 50px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
+    color: var(--text-primary);
 }
 
 .list-page-current {
-    color: #D9A299;
+    color: var(--primary);
 }
 
 .list-page-divider {
-    color: #5A4A3A;
-    opacity: 0.5;
+    color: var(--text-muted);
 }
 
 .list-page-total {
-    color: #2A1F11;
+    color: var(--text-primary);
 }
 
 /* ========== RESPONSIVE ========== */
@@ -364,8 +352,8 @@
     }
 
     .list-icon-wrapper {
-        width: 60px;
-        height: 60px;
+        width: 56px;
+        height: 56px;
     }
 
     .list-title {
@@ -389,8 +377,8 @@
     }
 
     .list-icon-wrapper {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
     }
 
     .list-title {
@@ -402,12 +390,12 @@
     }
 
     .list-nav-btn {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
     }
 
     .list-page-indicator {
-        padding: 12px 25px;
+        padding: 10px 20px;
         font-size: 1.1rem;
     }
 
@@ -440,8 +428,8 @@
     }
 
     .list-icon-wrapper {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
 
     .list-pagination {
@@ -449,12 +437,12 @@
     }
 
     .list-nav-btn {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
     }
 
     .list-page-indicator {
-        padding: 10px 20px;
+        padding: 8px 15px;
         font-size: 1rem;
     }
 

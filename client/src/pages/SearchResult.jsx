@@ -1,53 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Spinner, Card } from 'react-bootstrap';
 import api from '../api/api';
-import { ArrowLeft, Search as SearchIcon, PersonVideo, StarFill, Calendar } from 'react-bootstrap-icons';
-import '../styles/searchResult.css';
-import '../styles/GenrePage.css';
 
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
-// === KOMPONEN KECIL UNTUK FETCH RATING ===
-// Ini persis seperti MovieCard tapi tampilannya sesuai permintaanmu
 const MovieCardWithRating = ({ movie, onClick }) => {
     const [rating, setRating] = useState({ avg: 0, count: 0 });
-
     useEffect(() => {
         if (!movie?.id) return;
-        const fetchRating = async () => {
-            try {
-                const res = await api.get(`/reviews/stats/${movie.id}`);
-                if (res.data) {
-                    setRating({ avg: res.data.average || 0, count: res.data.count || 0 });
-                }
-            } catch (err) { /* silent error */ }
-        };
-        fetchRating();
+        api.get(`/reviews/stats/${movie.id}`).then(res => setRating(res.data || {})).catch(() => {});
     }, [movie.id]);
 
     return (
-        <Card className="movie-card" onClick={() => onClick(movie.id)}>
-            <div className="poster-wrapper">
-                <Card.Img
-                    variant="top"
-                    src={movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : 'https://via.placeholder.com/300x450?text=No+Image'}
+        <div onClick={() => onClick(movie.id)} className="bg-surface-card border border-outline-variant/60 rounded-xl overflow-hidden group cursor-pointer shadow-lg hover:border-primary/30 transition-all">
+            <div className="relative aspect-[2/3] overflow-hidden">
+                <img
+                    src={movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : 'https://via.placeholder.com/300x450/1D232C/A7AFBA?text=No+Image'}
                     alt={movie.title}
+                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
+                    loading="lazy"
                 />
-                <div className="rating-overlay">
-                    <StarFill size={12} className="me-1" />
-                    {/* Tampilkan Rating dari Database */}
-                    <span>{rating.avg > 0 ? rating.avg.toFixed(1) : '0.0'}</span>
+                <div className="absolute top-3 right-3 bg-background/85 backdrop-blur-sm px-2 py-0.5 rounded text-primary text-xs font-bold flex items-center gap-1 border border-primary/30">
+                    <span className="material-symbols-outlined text-[12px] fill-icon text-primary">star</span>
+                    {rating.avg ? rating.avg.toFixed(1) : '0.0'}
                 </div>
             </div>
-            <Card.Body className="p-2">
-                <h6 className="movie-title text-light mb-1">{movie.title}</h6>
-                <div className="movie-year text-secondary">
-                    <Calendar size={10} className="me-1" />
-                    {movie.release_date?.slice(0, 4) || 'N/A'}
-                </div>
-            </Card.Body>
-        </Card>
+            <div className="p-3">
+                <h6 className="text-sm font-heading font-semibold text-text-primary truncate group-hover:text-primary transition-colors">{movie.title}</h6>
+                <p className="text-xs text-text-muted mt-1">{movie.release_date?.slice(0, 4) || 'N/A'}</p>
+            </div>
+        </div>
     );
 };
 
@@ -57,128 +39,100 @@ const SearchResult = () => {
     const [error, setError] = useState(null);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    
     const query = searchParams.get('query');
     const isAdult = searchParams.get('isAdult');
 
     useEffect(() => {
         if (!query) return;
-
         const fetchSearchResults = async () => {
             setIsLoading(true);
             setError(null);
             try {
-                const res = await api.get('/movies/search', {
-                    params: { query, isAdult }
-                });
-
+                const res = await api.get('/movies/search', { params: { query, isAdult } });
                 const data = res.data;
                 setSearchData({
                     resultsByTitle: data.resultsByTitle || [],
                     resultsByActor: data.resultsByActor || [],
                     actorName: data.actorName
                 });
-
-                if (
-                    (!data.resultsByTitle || data.resultsByTitle.length === 0) &&
-                    (!data.resultsByActor || data.resultsByActor.length === 0)
-                ) {
-                    setError(`Tidak ada hasil untuk pencarian "${query}"`);
+                if ((!data.resultsByTitle || data.resultsByTitle.length === 0) && (!data.resultsByActor || data.resultsByActor.length === 0)) {
+                    setError(`No results found for "${query}"`);
                 }
             } catch (error) {
-                console.error("Gagal mencari film:", error);
-                setError("Terjadi kesalahan saat mencari film");
+                setError("An error occurred while searching");
                 setSearchData({ resultsByTitle: [], resultsByActor: [], actorName: null });
-            } finally {
-                setIsLoading(false);
-            }
+            } finally { setIsLoading(false); }
         };
-
         fetchSearchResults();
     }, [query, isAdult]);
 
-    const handleCardClick = (movieId) => {
-        navigate(`/movie/${movieId}`);
-    };
-
     if (isLoading) {
         return (
-            <div className="genre-loading">
-                <Spinner animation="border" variant="warning" />
-                <p className="mt-3 text-light">Mencari film "{query}"...</p>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center pt-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary"></div>
+                <p className="mt-4 text-text-secondary">Searching for "{query}"...</p>
             </div>
         );
     }
 
     return (
-        <div className="genre-page">
-            <Container className="py-4">
-                <div className="search-header mb-4 d-flex flex-column gap-3">
-                    <button className="search-back-btn" onClick={() => navigate(-1)}>
-                        <ArrowLeft size={20} /> <span>Kembali</span>
-                    </button>
+        <div className="min-h-screen bg-background pt-20">
+            <div className="max-w-[1280px] mx-auto px-6 py-12">
+                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors mb-8 text-sm font-semibold">
+                    <span className="material-symbols-outlined text-[20px]">arrow_back</span> Back
+                </button>
 
-                    <div className="d-flex align-items-center gap-3">
-                        <div className="search-icon-wrapper">
-                            <SearchIcon size={32} />
-                        </div>
-                        <div>
-                            <h1 className="text-light fw-bold m-0">Hasil Pencarian</h1>
-                            <p className="search-query m-0">
-                                "{query}" {isAdult === 'true' && <span className="badge bg-danger ms-2">18+</span>}
-                            </p>
-                        </div>
+                <div className="flex items-center gap-4 mb-10">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center">
+                        <span className="material-symbols-outlined text-primary text-[24px]">search</span>
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-heading font-bold text-text-primary">Search Results</h1>
+                        <p className="text-text-secondary text-sm">
+                            "{query}" {isAdult === 'true' && <span className="bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs ml-2 font-bold">18+</span>}
+                        </p>
                     </div>
                 </div>
 
                 {error ? (
-                    <div className="search-empty-state text-center">
-                        <div className="search-empty-icon fs-1 mb-3">🎬</div>
-                        <h3 className="search-empty-title text-light">Tidak Ada Hasil</h3>
-                        <p className="search-empty-text text-muted">{error}</p>
-                        <button className="btn btn-outline-warning mt-3" onClick={() => navigate('/')}>
-                            Kembali ke Beranda
+                    <div className="bg-surface-card border border-outline-variant/60 rounded-2xl p-16 text-center">
+                        <span className="material-symbols-outlined text-[64px] text-text-muted mb-4">movie</span>
+                        <h3 className="text-xl font-heading font-bold text-text-primary mb-3">No Results</h3>
+                        <p className="text-text-secondary mb-6">{error}</p>
+                        <button onClick={() => navigate('/')} className="bg-primary text-on-primary font-bold px-8 py-3 rounded-lg hover:bg-gold-hover transition-all text-sm uppercase tracking-wider">
+                            Back to Home
                         </button>
                     </div>
                 ) : (
-                    <div className="search-results-content">
-                        {/* BAGIAN 1: JUDUL */}
+                    <div>
                         {searchData.resultsByTitle.length > 0 && (
-                            <section className="mb-5">
-                                <h4 className="text-warning mb-3 border-bottom border-secondary pb-2">
-                                    Berdasarkan Judul Film
-                                </h4>
-                                <Row className="g-3 justify-content-start">
+                            <section className="mb-10">
+                                <h2 className="text-xl font-heading font-semibold text-primary mb-5 border-b border-outline-variant/30 pb-3">
+                                    By Movie Title
+                                </h2>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
                                     {searchData.resultsByTitle.map((movie) => (
-                                        <Col key={movie.id} xs={6} sm={4} md={3} lg={2}>
-                                            {/* Panggil komponen custom kita */}
-                                            <MovieCardWithRating movie={movie} onClick={handleCardClick} />
-                                        </Col>
+                                        <MovieCardWithRating key={movie.id} movie={movie} onClick={(id) => navigate(`/movie/${id}`)} />
                                     ))}
-                                </Row>
+                                </div>
                             </section>
                         )}
-
-                        {/* BAGIAN 2: AKTOR */}
                         {searchData.resultsByActor.length > 0 && (
                             <section>
-                                <h4 className="text-info mb-3 border-bottom border-secondary pb-2 d-flex align-items-center">
-                                    <PersonVideo className="me-2" />
-                                    Film yang dibintangi: {searchData.actorName}
-                                </h4>
-                                <Row className="g-3 justify-content-start">
+                                <h2 className="text-xl font-heading font-semibold text-primary mb-5 border-b border-outline-variant/30 pb-3 flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-[20px]">person</span>
+                                    Films starring: {searchData.actorName}
+                                </h2>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
                                     {searchData.resultsByActor.map((movie) => (
-                                        <Col key={movie.id} xs={6} sm={4} md={3} lg={2}>
-                                            {/* Panggil komponen custom kita */}
-                                            <MovieCardWithRating movie={movie} onClick={handleCardClick} />
-                                        </Col>
+                                        <MovieCardWithRating key={movie.id} movie={movie} onClick={(id) => navigate(`/movie/${id}`)} />
                                     ))}
-                                </Row>
+                                </div>
                             </section>
                         )}
                     </div>
                 )}
-            </Container>
+            </div>
         </div>
     );
 };

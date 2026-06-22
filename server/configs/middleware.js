@@ -38,7 +38,7 @@ export const securityHeaders = helmet({
 // Berlaku untuk semua request ke API
 export const globalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 menit
-    max: 1002, // Maksimal 100 request per IP dalam 15 menit
+    max: process.env.NODE_ENV === 'production' ? 1002 : 100000, // Relaksasikan limit di development
     message: { 
         message: 'Terlalu banyak permintaan dari IP ini, silakan coba lagi nanti.' 
     },
@@ -49,8 +49,8 @@ export const globalLimiter = rateLimit({
 // Limiter Khusus Auth: Mencegah Brute Force Password
 // Berlaku khusus untuk rute login/signup/verify
 export const authLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 jam
-    max: 10, // Maksimal 10 request gagal/sukses per jam per IP
+    windowMs: 15 * 60 * 1000, // 15 menit
+    max: process.env.NODE_ENV === 'production' ? 30 : 100000, // Relaksasikan limit di development
     message: { 
         message: 'Terlalu banyak percobaan login/daftar. Silakan coba lagi setelah 1 jam.' 
     },

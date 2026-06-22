@@ -1,118 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../App.jsx";
-import api from "../api/api"; 
-import axios from "axios";
+import api from "../api/api";
 import toast from 'react-hot-toast';
-import {
-    Container,
-    Row,
-    Col,
-    Card,
-    Spinner,
-    Button,
-    Badge,
-    Modal, // Import Modal
-} from "react-bootstrap";
-import { StarFill, Trash, ArrowLeft, Calendar, Bookmark, ExclamationCircle } from "react-bootstrap-icons";
-import '../styles/Watchlist.css';
 
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
-// === Komponen Helper untuk Card Watchlist ===
 const WatchlistCard = ({ movie, onClick, onRemove }) => {
-    const [rating, setRating] = useState({ avg: 0, count: 0 });
-
+    const [rating, setRating] = useState({ avg: 0 });
     useEffect(() => {
         if (!movie?.id) return;
-        const fetchRating = async () => {
-            try {
-                const res = await api.get(`/reviews/stats/${movie.id}`);
-                if (res.data) {
-                    setRating({ avg: res.data.average || 0, count: res.data.count || 0 });
-                }
-            } catch (err) { /* silent error */ }
-        };
-        fetchRating();
+        api.get(`/reviews/stats/${movie.id}`).then(res => setRating(res.data || {})).catch(() => {});
     }, [movie.id]);
 
-    const getRatingColor = (val) => {
-        if (val >= 4.5) return "#10b981";
-        if (val >= 3.5) return "#ffc107";
-        if (val >= 2.5) return "#ff9800";
-        return "#ef4444";
-    };
-
     return (
-        <Card
-            className="review-card h-100"
+        <div
+            className="bg-surface-card border border-outline-variant/60 rounded-xl overflow-hidden group cursor-pointer shadow-lg hover:border-primary/30 transition-all"
             onClick={() => onClick(movie.id)}
-            role="button"
-            tabIndex={0}
         >
-            <div className="poster-container">
-                <Card.Img
-                    variant="top"
-                    src={
-                        movie.poster_path
-                            ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
-                            : "https://via.placeholder.com/500x750?text=No+Image"
-                    }
-                    alt={movie.title}
-                    className="poster-image"
-                />
-
-                <div className="poster-gradient" />
-
-                <div
-                    className="rating-badge"
-                    style={{
-                        background: `linear-gradient(135deg, ${getRatingColor(rating.avg)}dd, ${getRatingColor(rating.avg)}ff)`
-                    }}
-                >
-                    <StarFill size={18} color="#fff" className="me-2" />
-                    <span className="text-white fw-bold fs-6">
-                        {rating.avg > 0 ? rating.avg.toFixed(1) : '0.0'}
-                    </span>
+            <div className="relative">
+                <div className="aspect-[2/3] overflow-hidden">
+                    <img
+                        src={movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : "https://via.placeholder.com/500x750/1D232C/A7AFBA?text=No+Image"}
+                        alt={movie.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
+                        loading="lazy"
+                    />
                 </div>
-
-                {/* Tombol Delete memicu fungsi onRemove dari Parent */}
-                <Button
-                    variant="danger"
-                    size="sm"
-                    className="delete-button"
+                <div className="absolute top-3 right-3 bg-background/85 backdrop-blur-sm px-2 py-0.5 rounded text-primary text-xs font-bold flex items-center gap-1 border border-primary/30">
+                    <span className="material-symbols-outlined text-[12px] fill-icon text-primary">star</span>
+                    {rating.avg ? rating.avg.toFixed(1) : "0.0"}
+                </div>
+                <button
                     onClick={(e) => onRemove(movie.id, e)}
+                    className="absolute top-3 left-3 bg-red-600/90 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
                 >
-                    <Trash size={18} />
-                </Button>
+                    <span className="material-symbols-outlined text-[16px]">delete</span>
+                </button>
             </div>
-
-            <Card.Body className="d-flex flex-column p-4">
-                <h5 className="movie-title text-light fw-bold mb-3">
+            <div className="p-4">
+                <h3 className="text-sm font-heading font-semibold text-text-primary truncate group-hover:text-primary transition-colors">
                     {movie.title}
-                </h5>
-
-                <div className="review-date d-flex align-items-center mb-3 text-secondary">
-                    <Calendar size={14} className="me-2" />
-                    <span>
-                        {movie.release_date ?
-                            new Date(movie.release_date).toLocaleDateString('id-ID', {
-                                day: 'numeric',
-                                month: 'short',
-                                year: 'numeric'
-                            }) : 'N/A'
-                        }
-                    </span>
-                </div>
-            </Card.Body>
-
-            <div
-                className="bottom-accent"
-                style={{
-                    background: `linear-gradient(90deg, ${getRatingColor(rating.avg)}, transparent)`
-                }}
-            />
-        </Card>
+                </h3>
+                <p className="text-xs text-text-muted mt-1">
+                    {movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'}
+                </p>
+            </div>
+        </div>
     );
 };
 
@@ -121,18 +55,12 @@ export default function Watchlist() {
     const navigate = useNavigate();
     const [watchlistMovies, setWatchlistMovies] = useState([]);
     const [loading, setLoading] = useState(true);
-    
-    // State untuk Modal Hapus
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [movieToDelete, setMovieToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
-        if (!user) {
-            toast.error("Silakan login terlebih dahulu");
-            navigate("/signin");
-            return;
-        }
+        if (!user) { toast.error("Silakan login terlebih dahulu"); navigate("/signin"); return; }
         fetchWatchlist();
     }, [user, navigate]);
 
@@ -141,55 +69,37 @@ export default function Watchlist() {
         try {
             const res = await api.get('/users/watchlist/me');
             const movieIds = res.data;
-
-            if (movieIds.length === 0) {
-                setWatchlistMovies([]);
-                setLoading(false);
-                return;
-            }
+            if (movieIds.length === 0) { setWatchlistMovies([]); setLoading(false); return; }
 
             const moviesWithDetails = await Promise.all(
                 movieIds.map(async (movieId) => {
-                    try {
-                        const movieRes = await api.get(`/movies/${movieId}`);
-                        return movieRes.data;
-                    } catch (error) {
-                        console.error(`Gagal fetch movie ${movieId}:`, error);
-                        return null;
-                    }
+                    try { return (await api.get(`/movies/${movieId}`)).data; }
+                    catch (error) { return null; }
                 })
             );
-
-            setWatchlistMovies(moviesWithDetails.filter(movie => movie !== null));
+            setWatchlistMovies(moviesWithDetails.filter(Boolean));
         } catch (error) {
-            console.error("Gagal ambil watchlist:", error);
             toast.error("Gagal memuat watchlist");
         } finally {
             setLoading(false);
         }
     };
 
-    // 1. Fungsi saat tombol sampah diklik (Hanya membuka modal)
     const initiateDelete = (movieId, e) => {
         e.stopPropagation();
         setMovieToDelete(movieId);
         setShowDeleteModal(true);
     };
 
-    // 2. Fungsi Eksekusi Hapus (Saat tombol "Hapus" di modal diklik)
     const confirmDelete = async () => {
         if (!movieToDelete) return;
-
         setIsDeleting(true);
         try {
             await api.post('/users/watchlist/toggle', { tmdbMovieId: movieToDelete });
-            
-            // Update UI
-            setWatchlistMovies(watchlistMovies.filter(movie => movie.id !== movieToDelete));
+            setWatchlistMovies(prev => prev.filter(m => m.id !== movieToDelete));
             toast.success("Film dihapus dari watchlist");
-            setShowDeleteModal(false); // Tutup modal
+            setShowDeleteModal(false);
         } catch (error) {
-            console.error("Gagal hapus dari watchlist:", error);
             toast.error("Gagal menghapus dari watchlist");
         } finally {
             setIsDeleting(false);
@@ -197,149 +107,64 @@ export default function Watchlist() {
         }
     };
 
-    // Fungsi Tutup Modal
-    const handleCloseModal = () => {
-        if (!isDeleting) {
-            setShowDeleteModal(false);
-            setMovieToDelete(null);
-        }
-    };
-
-    const handleCardClick = (movieId) => {
-        navigate(`/movie/${movieId}`);
-    };
-
     if (loading) {
         return (
-            <div className="my-reviews-loading">
-                <div className="text-center">
-                    <Spinner animation="border" className="loading-spinner" />
-                    <p className="mt-4 text-light fs-5 fw-light">Memuat watchlist...</p>
-                </div>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center pt-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-r-2 border-primary/20"></div>
+                <p className="mt-4 text-text-secondary">Loading watchlist...</p>
             </div>
         );
     }
 
     return (
-        <div className="my-reviews-page">
-            <div className="background-decoration" />
+        <div className="min-h-screen bg-background pt-20">
+            <div className="max-w-[1280px] mx-auto px-6 py-12">
+                <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors mb-8 text-sm font-semibold">
+                    <span className="material-symbols-outlined text-[20px]">arrow_back</span> Back
+                </button>
 
-            <Container className="py-5 position-relative">
-                {/* Header Section */}
-                <Row className="mb-5">
-                    <Col>
-                        <Button 
-                            variant="outline-light" 
-                            onClick={() => navigate(-1)}
-                            className="back-button mb-4"
-                        >
-                            <ArrowLeft className="me-2" size={20} />
-                            Kembali
-                        </Button>
-                        
-                        <div className="d-flex align-items-center mb-3">
-                            <div className="accent-bar" />
-                            <div>
-                                <h1 className="page-title text-light fw-bold mb-2">
-                                    Watchlist Saya
-                                </h1>
-                                <div className="d-flex align-items-center gap-3">
-                                    <Badge bg="warning" text="dark" className="review-badge">
-                                        <Bookmark className="me-2" size={16} />
-                                        {watchlistMovies.length} Film
-                                    </Badge>
-                                    <p className="text-secondary mb-0 fw-light">
-                                        Film yang ingin ditonton
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
+                <div className="flex items-center gap-4 mb-10">
+                    <div className="w-1 h-10 bg-primary rounded-full" />
+                    <div>
+                        <h1 className="text-3xl font-heading font-bold text-text-primary">My Watchlist</h1>
+                        <p className="text-text-secondary text-sm mt-1">
+                            <span className="text-primary font-bold">{watchlistMovies.length}</span> films saved to watch later
+                        </p>
+                    </div>
+                </div>
 
                 {watchlistMovies.length === 0 ? (
-                    <div className="empty-state text-center py-5">
-                        <div className="empty-icon">
-                            <Bookmark size={60} color="#ffc107" />
-                        </div>
-                        <h3 className="text-light fw-bold mb-3">Watchlist Kosong</h3>
-                        <p className="text-secondary mb-4 fs-5">
-                            Tambahkan film yang ingin Anda tonton nanti!
-                        </p>
-                        <Button 
-                            variant="warning" 
-                            onClick={() => navigate("/")}
-                            className="explore-button px-5 py-3 fw-bold"
-                        >
-                            Jelajahi Film
-                        </Button>
+                    <div className="bg-surface-card border border-outline-variant/60 rounded-2xl p-16 text-center">
+                        <span className="material-symbols-outlined text-[64px] text-text-muted mb-4">bookmark</span>
+                        <h3 className="text-xl font-heading font-bold text-text-primary mb-3">Watchlist is Empty</h3>
+                        <p className="text-text-secondary mb-6">Start adding films you want to watch!</p>
+                        <button onClick={() => navigate("/")} className="bg-primary text-on-primary font-bold px-8 py-3 rounded-lg hover:bg-gold-hover transition-all text-sm uppercase tracking-wider">
+                            Explore Films
+                        </button>
                     </div>
                 ) : (
-                    <Row className="g-3 justify-content-start">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
                         {watchlistMovies.map((movie) => (
-                            <Col xs={12} sm={6} lg={4} xl={3} key={movie.id}>
-                                <WatchlistCard
-                                    movie={movie}
-                                    onClick={handleCardClick}
-                                    onRemove={initiateDelete} // Panggil fungsi buka modal
-                                />
-                            </Col>
+                            <WatchlistCard key={movie.id} movie={movie} onClick={(id) => navigate(`/movie/${id}`)} onRemove={initiateDelete} />
                         ))}
-                    </Row>
-                )}
-            </Container>
-
-            {/* === MODAL KONFIRMASI HAPUS (Layout Centered) === */}
-            <Modal 
-                show={showDeleteModal} 
-                onHide={handleCloseModal}
-                centered // Ini agar modal muncul di tengah layar secara vertikal
-                backdrop="static" // Agar tidak keluar jika klik di luar (opsional, biar fokus)
-                keyboard={false}
-                className="delete-modal-custom" // Class khusus untuk CSS tambahan
-                data-bs-theme="dark"
-            >
-                <Modal.Header closeButton={!isDeleting} className="border-0 pb-0 justify-content-center">
-                    {/* Icon Besar di Tengah Atas (Opsional, gaya modern) */}
-                    <div className="w-100 text-center mb-2">
-                        <ExclamationCircle className="text-warning" size={60} />
                     </div>
-                </Modal.Header>
+                )}
+            </div>
 
-                <Modal.Body className="text-light text-center pt-0 px-4">
-                    <h4 className="fw-bold mb-3">Konfirmasi Hapus</h4>
-                    <p className="text-secondary mb-0">
-                        Apakah Anda yakin ingin menghapus film ini dari watchlist Anda?
-                    </p>
-                </Modal.Body>
-
-                <Modal.Footer className="border-0 d-flex flex-column gap-2 px-4 pb-4">
-                    {/* Tombol Disusun Vertikal (Stacked) agar "Pas di Tengah" */}
-                    <Button 
-                        variant="secondary" 
-                        onClick={handleCloseModal}
-                        disabled={isDeleting}
-                        className="w-100 py-2 fw-semibold rounded-pill" // w-100 bikin full width
-                    >
-                        Batal
-                    </Button>
-                    <Button 
-                        variant="danger" 
-                        onClick={confirmDelete}
-                        disabled={isDeleting}
-                        className="w-100 py-2 fw-bold rounded-pill"
-                    >
-                        {isDeleting ? (
-                            <>
-                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2"/>
-                                Menghapus...
-                            </>
-                        ) : (
-                            "Ya, Hapus"
-                        )}
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {showDeleteModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => !isDeleting && setShowDeleteModal(false)} />
+                    <div className="relative bg-surface-card border border-outline-variant/60 rounded-2xl w-full max-w-sm p-8 shadow-2xl z-10 text-center">
+                        <span className="material-symbols-outlined text-[48px] text-primary mb-4">warning</span>
+                        <h3 className="text-xl font-heading font-bold text-text-primary mb-2">Remove from Watchlist?</h3>
+                        <p className="text-text-secondary text-sm mb-6">Are you sure you want to remove this film?</p>
+                        <div className="flex flex-col gap-2">
+                            <button onClick={() => setShowDeleteModal(false)} disabled={isDeleting} className="w-full py-2.5 border border-outline-variant/60 rounded-lg text-text-secondary font-semibold text-sm hover:text-text-primary transition-colors">Cancel</button>
+                            <button onClick={confirmDelete} disabled={isDeleting} className="w-full py-2.5 bg-red-600 text-white rounded-lg font-bold text-sm hover:bg-red-700 transition-colors">{isDeleting ? "Removing..." : "Yes, Remove"}</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

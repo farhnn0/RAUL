@@ -261,3 +261,18 @@ export const getGenres = async (req, res, next) => {
         next({ status: error.response?.status || 500, message: 'Gagal mengambil data dari TMDB' });
     }
 };
+
+// 6. Mengambil Film Serupa (Similar Movies)
+export const getSimilarMovies = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const response = await axios.get(
+            `${BASE_URL}/movie/${id}/similar`,
+            tmdbParams({ language: 'en-US' })
+        );
+        const modifiedResults = resetRatings(response.data.results);
+        res.status(200).json(modifiedResults);
+    } catch (error) {
+        next({ status: error.response?.status || 500, message: 'Gagal mengambil data film serupa' });
+    }
+};
